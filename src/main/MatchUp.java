@@ -201,6 +201,19 @@ public class MatchUp {
                     objectNode.put("error", retStringError);
                     break;
 
+                case "getCardAtPosition":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("x", action.getX());
+                    objectNode.put("y", action.getY());
+                    Point point = new Point(action.getX(), action.getY());
+                    retObjectNode = handleGetCardAtPosition(point);
+                    if (retObjectNode == null) {
+                        objectNode.put("output", "No card available at that position.");
+                        break;
+                    }
+                    objectNode.set("output", retObjectNode);
+                    break;
+
 //                TODO: Remove debug case
                 case "breakpoint":
                     debug_breakpoint_counter++;
@@ -266,6 +279,9 @@ public class MatchUp {
         if (attackerCard.isFrozen())
             return "Attacker card is frozen.";
 
+        if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank())
+            return "Attacked card is not of type 'Tank’.";
+
         // Main logic of the function
         int attackDealt = attackerCard.attack(defenderCard);
         // If we dealt less damage then normal, then we killed the card
@@ -274,5 +290,17 @@ public class MatchUp {
         }
 
         return null;
+    }
+
+    /**
+     * Finds the card at the coordinates given
+     * @param point The coordinates of the card
+     * @return Returns the card that need to be displayed or null on failure
+     */
+    public ObjectNode handleGetCardAtPosition(Point point) {
+        genericCard card = field.getCard(point);
+        if (card == null)
+            return null;
+        return card.printCard();
     }
 }

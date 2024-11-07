@@ -1,4 +1,21 @@
 [ {
+  "command" : "getCardAtPosition",
+  "x" : 0,
+  "y" : 3,
+  "output" : "No card available at that position."
+}, {
+  "command" : "getCardAtPosition",
+  "x" : 2,
+  "y" : 0,
+  "output" : {
+    "mana" : 3,
+    "attackDamage" : 3,
+    "health" : 1,
+    "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
+    "colors" : [ "Brown", "Blue" ],
+    "name" : "Warden"
+  }
+}, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
     "x" : 2,
@@ -67,6 +84,18 @@
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
+}, {
+  "command" : "getCardAtPosition",
+  "x" : 1,
+  "y" : 0,
+  "output" : {
+    "mana" : 3,
+    "attackDamage" : 2,
+    "health" : 5,
+    "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
+    "colors" : [ "Brown", "Black", "Grey" ],
+    "name" : "Goliath"
+  }
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,

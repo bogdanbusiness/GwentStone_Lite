@@ -90,6 +90,12 @@ public class GameField {
         player2Hero = null;
     }
 
+    /**
+     * Checks if a card is an enemy
+     * @param cardCoordinates The coordinates of the card checked
+     * @param playerTurn The turn of the player who attacks
+     * @return Returns whether a card is an enemy or not
+     */
     public boolean isEnemy(Point cardCoordinates, int playerTurn) {
         int cardRow = cardCoordinates.getRow();
         if (playerTurn == 1 &&
@@ -100,6 +106,29 @@ public class GameField {
             return false;
 
         return true;
+    }
+
+    /**
+     * Gets the number of tanks on the front row
+     * @param playerTurn The turn of the player
+     * @return The number of tanks on the row
+     */
+    public int getTanksOnRow(int playerTurn) {
+        int tankNumber = 0;
+
+        if (playerTurn == 1) {
+            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++)
+                if (field[GameConstants.PLAYER1_FRONT_ROW][i] != null &&
+                    field[GameConstants.PLAYER1_FRONT_ROW][i].isTank())
+                    tankNumber++;
+        } else {
+            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++)
+                if (field[GameConstants.PLAYER2_FRONT_ROW][i] != null &&
+                    field[GameConstants.PLAYER2_FRONT_ROW][i].isTank())
+                    tankNumber++;
+        }
+
+        return tankNumber;
     }
 
     /**
