@@ -25,7 +25,7 @@
     "x" : 0,
     "y" : 0
   },
-  "error" : "Attacked card is not of type 'Tank'."
+  "error" : "Attacked card is not of type 'Tank’."
 }, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {

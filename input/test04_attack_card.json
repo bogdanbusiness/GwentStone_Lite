@@ -410,9 +410,6 @@
           "command": "getPlayerTurn"
         },
         {
-          "command": "breakpoint"
-        },
-        {
           "command": "cardUsesAttack",
           "cardAttacker": {
             "x": 3,
@@ -422,9 +419,6 @@
             "x": 0,
             "y": 0
           }
-        },
-        {
-          "command": "breakpoint"
         },
         {
           "command": "endPlayerTurn"

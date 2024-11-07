@@ -120,17 +120,6 @@
   "playerIdx" : 2,
   "output" : 27
 }, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 0,
-    "y" : 0
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 0
-  },
-  "error" : "Attacker card has already attacked this turn."
-}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
@@ -189,17 +178,6 @@
   "playerIdx" : 2,
   "output" : 53
 }, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 2
-  },
-  "cardAttacked" : {
-    "x" : 1,
-    "y" : 3
-  },
-  "error" : "Attacker card has already attacked this turn."
-}, {
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
@@ -225,17 +203,6 @@
   "command" : "getPlayerMana",
   "playerIdx" : 2,
   "output" : 83
-}, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 0,
-    "y" : 0
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 1
-  },
-  "error" : "Attacker card has already attacked this turn."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -575,7 +542,7 @@
     "x" : 2,
     "y" : 3
   },
-  "error" : "Attacker card has already attacked this turn."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardAtPosition",
   "x" : 2,

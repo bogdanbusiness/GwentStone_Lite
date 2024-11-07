@@ -80,7 +80,7 @@
     "x" : 0,
     "y" : 2
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -107,17 +107,6 @@
 }, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
-    "x" : 0,
-    "y" : 0
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 1
-  },
-  "error" : "Attacker card has already attacked this turn."
-}, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
     "x" : 2,
     "y" : 3
   },
@@ -125,7 +114,7 @@
     "x" : 0,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
@@ -166,7 +155,7 @@
   }, {
     "mana" : 3,
     "attackDamage" : 2,
-    "health" : 4,
+    "health" : 2,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"

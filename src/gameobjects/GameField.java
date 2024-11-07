@@ -132,10 +132,13 @@ public class GameField {
     }
 
     /**
-     * Unfreezes all the cards on the board
+     * Enables cards to attack again and unfreezes them
      */
-    public void unfreezeCards() {
-
+    public void resetStatusForCards() {
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++)
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++)
+                if (field[i][j] != null)
+                    field[i][j].reset();
     }
 
     /**

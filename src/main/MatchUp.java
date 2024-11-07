@@ -110,8 +110,8 @@ public class MatchUp {
         player1.drawCardFromDeck();
         player2.drawCardFromDeck();
 
-        // Unfreezes the cards
-        field.unfreezeCards();
+        // Reset the field statuses
+        field.resetStatusForCards();
     }
 
     /**
@@ -149,6 +149,8 @@ public class MatchUp {
                     break;
 
                 case "endPlayerTurn":
+                    // TODO: REMOVE THIS LINE
+//                    System.out.println("ended player turn: " + playerTurn + "\n");
                     playerTurn = playerTurn == 1 ? 2 : 1;
                     turnCounter++;
                     if (turnCounter % 2 == 1)
@@ -265,6 +267,14 @@ public class MatchUp {
     public String handleAttackCard(Point attackerCoords, Point defenderCoords) {
         genericCard attackerCard = field.getCard(attackerCoords);
         genericCard defenderCard = field.getCard(defenderCoords);
+
+        // TODO: Remove this
+//        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
+//        System.out.println("defender - x: " + defenderCoords.getRow() +" y: " + defenderCoords.getColumn());
+//        System.out.println("ATT card: " + attackerCard.getAttackDamage());
+//        System.out.println("hasAttacked: " + attackerCard.isHasAttacked());
+//        System.out.println("HP card: " + defenderCard.getHealth());
+
         if (attackerCard == null || defenderCard == null)
             return "Card not found.";
 
@@ -280,7 +290,7 @@ public class MatchUp {
             return "Attacker card is frozen.";
 
         if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank())
-            return "Attacked card is not of type 'Tank’.";
+            return "Attacked card is not of type 'Tank'.";
 
         // Main logic of the function
         int attackDealt = attackerCard.attack(defenderCard);

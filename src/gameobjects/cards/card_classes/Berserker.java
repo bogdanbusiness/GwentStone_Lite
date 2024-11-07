@@ -15,7 +15,7 @@ public class Berserker extends genericCard {
     }
 
     @Override
-    public int getRowPlacement (int playerIndex) {
+    public final int getRowPlacement (int playerIndex) {
         return playerIndex == 1 ? GameConstants.PLAYER1_BACK_ROW : GameConstants.PLAYER2_BACK_ROW;
     }
 }
