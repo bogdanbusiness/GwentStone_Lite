@@ -15,11 +15,15 @@ public class Point {
         this.column = 0;
     }
 
-    public Point(int row, int column) {
+    public Point(final int row, final int column) {
         this.row = row;
         this.column = column;
     }
 
+    /**
+     * Turns the point into a JSON format
+     * @return ObjectNode instance with the format
+     */
     public ObjectNode toJson() {
         ObjectMapper mapper = new ObjectMapper();
 

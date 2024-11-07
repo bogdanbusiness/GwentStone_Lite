@@ -1,22 +1,22 @@
 package gameobjects.cards.card_classes;
 
-import gameobjects.cards.genericCard;
+import gameobjects.cards.GenericCard;
 import fileio.CardInput;
 import utils.GameConstants;
 
-public class Sentinel extends genericCard {
+public class Sentinel extends GenericCard {
     public Sentinel() {
         super();
         super.setTank(false);
     }
 
-    public Sentinel(CardInput card) {
+    public Sentinel(final CardInput card) {
         super(card);
         super.setTank(false);
     }
 
     @Override
-    public int getRowPlacement (int playerIndex) {
+    public final int getRowPlacement(final int playerIndex) {
         return playerIndex == 1 ? GameConstants.PLAYER1_BACK_ROW : GameConstants.PLAYER2_BACK_ROW;
     }
 }

@@ -7,8 +7,9 @@ import utils.GameConstants;
 
 import java.util.ArrayList;
 
-public class genericHero extends genericCard {
-    public genericHero(int mana, String name, String description, ArrayList<String> colors) {
+public class GenericHero extends GenericCard {
+    public GenericHero(final int mana, final String name,
+                       final String description, final ArrayList<String> colors) {
         super(mana, GameConstants.HERO_HEALTH, 0, name, description, colors);
     }
 
@@ -26,8 +27,9 @@ public class genericHero extends genericCard {
         // Create a new mapper for colors
         ObjectMapper colorMapper = new ObjectMapper();
         ArrayNode colorsArray = colorMapper.createArrayNode();
-        for (int j = 0; j < getColors().size(); j++)
+        for (int j = 0; j < getColors().size(); j++) {
             colorsArray.add(getColors().get(j));
+        }
 
         cardNode.set("colors", colorsArray);
 

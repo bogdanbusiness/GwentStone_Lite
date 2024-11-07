@@ -1,6 +1,6 @@
 package main;
 
-import gameobjects.cards.genericCard;
+import gameobjects.cards.GenericCard;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -20,7 +20,7 @@ import utils.Point;
 import java.util.ArrayList;
 
 @Getter @Setter
-public class MatchUp {
+public final class MatchUp {
     private static MatchUp instance = null;
     private GameField field;
     private Player player1;
@@ -30,12 +30,13 @@ public class MatchUp {
     private int playerTurn;
     private int turnCounter;
 
-    private int debug_breakpoint_counter = 0;
+    // TODO: REMOVE THIS
+    private int debugBreakpointCounter = 0;
 
     // Constructors
 
     // The match-up is a singleton
-    private MatchUp(Input input) {
+    private MatchUp(final Input input) {
         field = new GameField();
         player1 = new Player(input.getPlayerOneDecks());
         player2 = new Player(input.getPlayerTwoDecks());
@@ -48,9 +49,10 @@ public class MatchUp {
      * Singleton method for class MatchUp
      * @return Returns the MatchUp instance
      */
-    public static MatchUp getInstance(Input input) {
-        if (instance == null)
+    public static MatchUp getInstance(final Input input) {
+        if (instance == null) {
             return new MatchUp(input);
+        }
         return instance;
     }
 
@@ -68,7 +70,7 @@ public class MatchUp {
      * This method starts a new game for this MatchUp
      * @param input The game played
      */
-    public void startNewGame(GameInput input) {
+    public void startNewGame(final GameInput input) {
         // Choose the deck for the players
         player1.chooseDeck(input.getStartGame().getPlayerOneDeckIdx());
         player2.chooseDeck(input.getStartGame().getPlayerTwoDeckIdx());
@@ -118,7 +120,7 @@ public class MatchUp {
      * Plays a game and performs debug actions
      * @param actions The actions performed by players and/or debuggers
      */
-    public ArrayNode playGame(ArrayList<ActionsInput> actions) {
+    public ArrayNode playGame(final ArrayList<ActionsInput> actions) {
         // Create the mapper and the output array
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode output = mapper.createArrayNode();
@@ -153,8 +155,9 @@ public class MatchUp {
 //                    System.out.println("ended player turn: " + playerTurn + "\n");
                     playerTurn = playerTurn == 1 ? 2 : 1;
                     turnCounter++;
-                    if (turnCounter % 2 == 1)
+                    if (turnCounter % 2 == 1) {
                         startRound();
+                    }
                     break;
 
                 case "getPlayerTurn":
@@ -171,8 +174,9 @@ public class MatchUp {
 
                 case "placeCard":
                     retStringError = handlePlaceCard(action);
-                    if (retStringError == null)
+                    if (retStringError == null) {
                         break;
+                    }
                     objectNode.put("command", action.getCommand());
                     objectNode.put("error", retStringError);
                     objectNode.put("handIdx", action.getHandIdx());
@@ -195,8 +199,9 @@ public class MatchUp {
                     Point attackerCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
                     Point defenderCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
                     retStringError = handleAttackCard(attackerCoords, defenderCoords);
-                    if (retStringError == null)
+                    if (retStringError == null) {
                         break;
+                    }
                     objectNode.put("command", action.getCommand());
                     objectNode.set("cardAttacker", attackerCoords.toJson());
                     objectNode.set("cardAttacked", defenderCoords.toJson());
@@ -218,7 +223,7 @@ public class MatchUp {
 
 //                TODO: Remove debug case
                 case "breakpoint":
-                    debug_breakpoint_counter++;
+                    debugBreakpointCounter++;
                     break;
 
                 default:
@@ -226,8 +231,9 @@ public class MatchUp {
                     System.out.println("Command: " + action.getCommand());
             }
 
-            if (!objectNode.isEmpty())
+            if (!objectNode.isEmpty()) {
                 output.add(objectNode);
+            }
         }
 
         return output;
@@ -238,20 +244,22 @@ public class MatchUp {
      * @param action The command that was given
      * @return Null on success or an error string on failure
      */
-    public String handlePlaceCard(ActionsInput action) {
+    public String handlePlaceCard(final ActionsInput action) {
         // Get the card from hand
         int handIndex = action.getHandIdx();
-        genericCard card = playerTurn == 1 ? player1.placeCardFromHand(handIndex) : player2.placeCardFromHand(handIndex);
-        if (card == null)
+        GenericCard card = playerTurn == 1 ? player1.placeCardFromHand(handIndex) : player2.placeCardFromHand(handIndex);
+        if (card == null) {
             return "Not enough mana to place card on table.";
+        }
 
         //   Check if we can place the card and return the card to the hand of the player if we cant
         int rowAffected = card.getRowPlacement(playerTurn);
         if (field.getRowOccupancy(rowAffected) == GameConstants.TABLE_COLUMNS) {
-            if (playerTurn == 1)
+            if (playerTurn == 1) {
                 player1.returnCardToHand(card, handIndex);
-            else
+            } else {
                 player2.returnCardToHand(card, handIndex);
+            }
             return "Cannot place card on table since row is full.";
         }
         field.addCard(card, rowAffected);
@@ -264,9 +272,9 @@ public class MatchUp {
      * @param defenderCoords The coordinates of the defender card
      * @return Null on success or an error string on failure
      */
-    public String handleAttackCard(Point attackerCoords, Point defenderCoords) {
-        genericCard attackerCard = field.getCard(attackerCoords);
-        genericCard defenderCard = field.getCard(defenderCoords);
+    public String handleAttackCard(final Point attackerCoords, final Point defenderCoords) {
+        GenericCard attackerCard = field.getCard(attackerCoords);
+        GenericCard defenderCard = field.getCard(defenderCoords);
 
         // TODO: Remove this
 //        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
@@ -275,22 +283,27 @@ public class MatchUp {
 //        System.out.println("hasAttacked: " + attackerCard.isHasAttacked());
 //        System.out.println("HP card: " + defenderCard.getHealth());
 
-        if (attackerCard == null || defenderCard == null)
+        if (attackerCard == null || defenderCard == null) {
             return "Card not found.";
+        }
 
         // Check if the defender is an enemy
-        if (!field.isEnemy(defenderCoords, playerTurn))
+        if (!field.isEnemy(defenderCoords, playerTurn)) {
             return "Attacked card does not belong to the enemy.";
+        }
 
         // Check if the attacker has attacked already this turn
-        if (attackerCard.isHasAttacked())
+        if (attackerCard.isHasAttacked()) {
             return "Attacker card has already attacked this turn.";
+        }
 
-        if (attackerCard.isFrozen())
+        if (attackerCard.isFrozen()) {
             return "Attacker card is frozen.";
+        }
 
-        if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank())
+        if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank()) {
             return "Attacked card is not of type 'Tank'.";
+        }
 
         // Main logic of the function
         int attackDealt = attackerCard.attack(defenderCard);
@@ -307,10 +320,11 @@ public class MatchUp {
      * @param point The coordinates of the card
      * @return Returns the card that need to be displayed or null on failure
      */
-    public ObjectNode handleGetCardAtPosition(Point point) {
-        genericCard card = field.getCard(point);
-        if (card == null)
+    public ObjectNode handleGetCardAtPosition(final Point point) {
+        GenericCard card = field.getCard(point);
+        if (card == null) {
             return null;
+        }
         return card.printCard();
     }
 }

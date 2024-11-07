@@ -1,6 +1,6 @@
 package utils;
 
-public class GameConstants {
+public final class GameConstants {
     public static final int TABLE_ROWS = 4;
     public static final int TABLE_COLUMNS = 5;
 

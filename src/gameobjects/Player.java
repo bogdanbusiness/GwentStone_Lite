@@ -1,6 +1,7 @@
 package gameobjects;
 
-import gameobjects.cards.genericCard;
+import gameobjects.cards.GenericCard;
+import gameobjects.cards.GenericHero;
 import gameobjects.cards.hero_classes.EmpressThorina;
 import gameobjects.cards.hero_classes.GeneralKocioraw;
 import gameobjects.cards.hero_classes.KingMudface;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.CardInput;
 import fileio.DecksInput;
-import gameobjects.cards.genericHero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +25,7 @@ public class Player {
     private ArrayList<Deck> possibleDecks;
     private Deck deck;
     private Deck hand;
-    private genericHero genericHero;
+    private GenericHero genericHero;
     private int  mana;
 
     private int wonGames;
@@ -42,7 +42,7 @@ public class Player {
         totalGames = 0;
     }
 
-    public Player(DecksInput decksInput) {
+    public Player(final DecksInput decksInput) {
         // Transfer the deck from the input to the current class
         possibleDecks = new ArrayList<>();
         ArrayList<CardInput> inputDeck;
@@ -84,26 +84,31 @@ public class Player {
     }
 
     /**
-     * genericHero setter that creates the specific class of the genericHero
-     * @param hero The genericHero input card
+     * GenericHero setter that creates the specific class of the GenericHero
+     * @param hero The GenericHero input card
      */
-    public void setGenericHero(CardInput hero) {
+    public void setGenericHero(final CardInput hero) {
         switch (hero.getName()) {
             case "Empress Thorina":
-                this.genericHero = new EmpressThorina(hero.getMana(), hero.getName(), hero.getDescription(), hero.getColors());
+                this.genericHero = new EmpressThorina(hero.getMana(), hero.getName(),
+                                                      hero.getDescription(), hero.getColors());
                 break;
             case "General Kocioraw":
-                this.genericHero = new GeneralKocioraw(hero.getMana(), hero.getName(), hero.getDescription(), hero.getColors());
+                this.genericHero = new GeneralKocioraw(hero.getMana(), hero.getName(),
+                                                       hero.getDescription(), hero.getColors());
                 break;
             case "King Mudface":
-                this.genericHero = new KingMudface(hero.getMana(), hero.getName(), hero.getDescription(), hero.getColors());
+                this.genericHero = new KingMudface(hero.getMana(), hero.getName(),
+                                                   hero.getDescription(), hero.getColors());
                 break;
             case "Lord Royce":
-                this.genericHero = new LordRoyce(hero.getMana(), hero.getName(), hero.getDescription(), hero.getColors());
+                this.genericHero = new LordRoyce(hero.getMana(), hero.getName(),
+                                                 hero.getDescription(), hero.getColors());
                 break;
             default:
-                this.genericHero = new genericHero(hero.getMana(), hero.getName(), hero.getDescription(), hero.getColors());
-                System.out.println("genericHero not recognized.");
+                this.genericHero = new GenericHero(hero.getMana(), hero.getName(),
+                                                   hero.getDescription(), hero.getColors());
+                System.out.println("Hero not recognized.");
                 System.out.println(hero.getName());
         }
     }
@@ -114,7 +119,7 @@ public class Player {
      * Chooses a deck from the pile of decks
      * @param deckIndex The index of the deck chosen
      */
-    public void chooseDeck(int deckIndex) {
+    public void chooseDeck(final int deckIndex) {
         deck = new Deck(possibleDecks.get(deckIndex));
     }
 
@@ -122,7 +127,7 @@ public class Player {
      * Shuffles the deck of the player using a set seed
      * @param seed The seed that will be used to shuffle the deck
      */
-    public void shufflePlayerDeck(int seed) {
+    public void shufflePlayerDeck(final int seed) {
         deck.shuffleDeck(seed);
     }
 
@@ -130,9 +135,10 @@ public class Player {
      * Draws a card from deck and adds it into the hand
      */
     public void drawCardFromDeck() {
-        genericCard card = deck.removeFirstFromDeck();
-        if (card != null)
+        GenericCard card = deck.removeFirstFromDeck();
+        if (card != null) {
             hand.addToIndexInDeck(card, hand.getNumCards());
+        }
     }
 
     /**
@@ -140,11 +146,12 @@ public class Player {
      * @param handIndex The card that will be removed
      * @return The instance of the card removed
      */
-    public genericCard placeCardFromHand(int handIndex) {
+    public GenericCard placeCardFromHand(final int handIndex) {
         // Find the card and check if it exists or if we have enough mana to cast it
-        genericCard card = hand.findCardInDeck(handIndex);
-        if (card == null || card.getMana() > mana)
+        GenericCard card = hand.findCardInDeck(handIndex);
+        if (card == null || card.getMana() > mana) {
             return null;
+        }
 
         expendMana(card.getMana());
         return hand.removeFromDeck(handIndex);
@@ -154,7 +161,7 @@ public class Player {
      * Returns a card to the start of the hand
      * @param card The card that will be reintroduced
      */
-    public void returnCardToHand(genericCard card, int handIndex) {
+    public void returnCardToHand(final GenericCard card, final int handIndex) {
         deck.addToIndexInDeck(card, handIndex);
     }
 
@@ -163,9 +170,15 @@ public class Player {
      * Adds mana to the player's pool proportional to the number of rounds
      * @param turnCounter The number of ended turns since the start of the match
      */
-    public void receiveMana(int turnCounter) { mana += min(turnCounter / 2 + 1, GameConstants.MAX_MANA); }
+    public void receiveMana(final int turnCounter) {
+        mana += min(turnCounter / 2 + 1, GameConstants.MAX_MANA);
+    }
 
-    public void expendMana(int manaExpended) {
+    /**
+     * Spends the mana of the player
+     * @param manaExpended The amount of mana used
+     */
+    public void expendMana(final int manaExpended) {
         mana -= manaExpended;
     }
 

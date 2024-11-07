@@ -1,7 +1,7 @@
 package gameobjects;
 
-import gameobjects.cards.genericHero;
-import gameobjects.cards.genericCard;
+import gameobjects.cards.GenericCard;
+import gameobjects.cards.GenericHero;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
@@ -11,11 +11,12 @@ import utils.GameConstants;
 import utils.Point;
 
 public class GameField {
-    private final genericCard[][] field = new genericCard[GameConstants.TABLE_ROWS][GameConstants.TABLE_COLUMNS];
+    private final GenericCard[][] field =
+            new GenericCard[GameConstants.TABLE_ROWS][GameConstants.TABLE_COLUMNS];
     @Getter @Setter
-    private genericHero player1Hero;
+    private GenericHero player1Hero;
     @Getter @Setter
-    private genericHero player2Hero;
+    private GenericHero player2Hero;
 
     // Constructor
 
@@ -23,32 +24,35 @@ public class GameField {
         player1Hero = null;
         player2Hero = null;
 
-        for (int i = 0; i < GameConstants.TABLE_ROWS; i++)
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++)
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 field[i][j] = null;
+            }
+        }
     }
 
     // Methods
 
     /**
-     * Adds a genericCard to the playing field
-     * @param genericCard The genericCard that is placed down
+     * Adds a GenericCard to the playing field
+     * @param genericCard The GenericCard that is placed down
      * @param rowNumber The index of the row where the card will be placed
      */
-    public void addCard(genericCard genericCard, int rowNumber) {
-        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++)
+    public void addCard(final GenericCard genericCard, final int rowNumber) {
+        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
             if (field[rowNumber][i] == null) {
                 field[rowNumber][i] = genericCard;
                 break;
             }
+        }
     }
 
     /**
      * Gets the card on the field
      * @param point The coordinates of the card on the field
-     * @return Returns the genericCard instance
+     * @return Returns the GenericCard instance
      */
-    public genericCard getCard(Point point) {
+    public GenericCard getCard(final Point point) {
         return field[point.getRow()][point.getColumn()];
     }
 
@@ -56,10 +60,11 @@ public class GameField {
      * Removes the card from the field
      * @param point The coordinates of the card on the field
      */
-    public void removeCard(Point point) {
+    public void removeCard(final Point point) {
         // Shifts every column on the row to the left
-        for (int i = point.getRow(); i < GameConstants.TABLE_ROWS; i++)
+        for (int i = point.getRow(); i < GameConstants.TABLE_ROWS; i++) {
             field[point.getRow()][i] = field[point.getRow()][i + 1];
+        }
         field[point.getRow()][GameConstants.TABLE_COLUMNS - 1] = null;
     }
 
@@ -68,13 +73,14 @@ public class GameField {
      * @param row The row checked
      * @return Returns the number of cards on the row checked
      */
-    public int getRowOccupancy(int row) {
+    public int getRowOccupancy(final int row) {
         int cards = 0;
 
-        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++)
-            if (field[row][i] != null)
+        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
+            if (field[row][i] != null) {
                 cards++;
-
+            }
+        }
         return cards;
     }
 
@@ -82,10 +88,11 @@ public class GameField {
      * Completely resets the field
      */
     public void resetField() {
-        for (int i = 0; i < GameConstants.TABLE_ROWS; i++)
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++)
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 field[i][j] = null;
-
+            }
+        }
         player1Hero = null;
         player2Hero = null;
     }
@@ -96,15 +103,18 @@ public class GameField {
      * @param playerTurn The turn of the player who attacks
      * @return Returns whether a card is an enemy or not
      */
-    public boolean isEnemy(Point cardCoordinates, int playerTurn) {
+    public boolean isEnemy(final Point cardCoordinates, final int playerTurn) {
         int cardRow = cardCoordinates.getRow();
-        if (playerTurn == 1 &&
-                (cardRow == GameConstants.PLAYER1_FRONT_ROW || cardRow == GameConstants.PLAYER1_BACK_ROW))
-            return false;
-        else if (playerTurn == 2 &&
-                 (cardRow == GameConstants.PLAYER2_FRONT_ROW || cardRow == GameConstants.PLAYER2_BACK_ROW))
-            return false;
-
+        // Check the respective rows associated with a player
+        if (playerTurn == 1
+            && (cardRow == GameConstants.PLAYER1_FRONT_ROW
+                || cardRow == GameConstants.PLAYER1_BACK_ROW)) {
+                return false;
+        } else if (playerTurn == 2
+                 && (cardRow == GameConstants.PLAYER2_FRONT_ROW
+                 || cardRow == GameConstants.PLAYER2_BACK_ROW)) {
+                return false;
+        }
         return true;
     }
 
@@ -113,19 +123,23 @@ public class GameField {
      * @param playerTurn The turn of the player
      * @return The number of tanks on the row
      */
-    public int getTanksOnRow(int playerTurn) {
+    public int getTanksOnRow(final int playerTurn) {
         int tankNumber = 0;
 
         if (playerTurn == 1) {
-            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++)
-                if (field[GameConstants.PLAYER1_FRONT_ROW][i] != null &&
-                    field[GameConstants.PLAYER1_FRONT_ROW][i].isTank())
+            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
+                if (field[GameConstants.PLAYER1_FRONT_ROW][i] != null
+                    && field[GameConstants.PLAYER1_FRONT_ROW][i].isTank()) {
                     tankNumber++;
+                }
+            }
         } else {
-            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++)
-                if (field[GameConstants.PLAYER2_FRONT_ROW][i] != null &&
-                    field[GameConstants.PLAYER2_FRONT_ROW][i].isTank())
+            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
+                if (field[GameConstants.PLAYER2_FRONT_ROW][i] != null
+                    &&  field[GameConstants.PLAYER2_FRONT_ROW][i].isTank()) {
                     tankNumber++;
+                }
+            }
         }
 
         return tankNumber;
@@ -135,17 +149,20 @@ public class GameField {
      * Enables cards to attack again and unfreezes them
      */
     public void resetStatusForCards() {
-        for (int i = 0; i < GameConstants.TABLE_ROWS; i++)
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++)
-                if (field[i][j] != null)
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                if (field[i][j] != null) {
                     field[i][j].reset();
+                }
+            }
+        }
     }
 
     /**
      * Returns in JSON format the held hand of the player
      * @return ArrayNode with the formatted JSON
      */
-    public ArrayNode printAllCardsOnTable () {
+    public ArrayNode printAllCardsOnTable() {
         // Creates the output
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode output = mapper.createArrayNode();
@@ -153,9 +170,11 @@ public class GameField {
         // Iterate through the entire field
         for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
             ArrayNode row = mapper.createArrayNode();
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++)
-                if (field[i][j] != null)
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                if (field[i][j] != null) {
                     row.add(field[i][j].printCard());
+                }
+            }
             output.add(row);
         }
 
