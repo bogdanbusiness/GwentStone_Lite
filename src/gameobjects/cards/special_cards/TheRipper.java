@@ -4,6 +4,8 @@ import gameobjects.cards.GenericCard;
 import fileio.CardInput;
 import utils.GameConstants;
 
+import java.util.ArrayList;
+
 public class TheRipper extends GenericCard {
     public TheRipper() {
         super();
@@ -21,14 +23,21 @@ public class TheRipper extends GenericCard {
     }
 
     @Override
-    public final void useAbility(final GenericCard enemy) {
+    public final GenericCard useAbility(final ArrayList<GenericCard> cards) {
+        if (cards.isEmpty()) {
+            return null;
+        }
+
+        GenericCard enemy = cards.get(0);
         if (enemy.getAttackDamage() < 2) {
             enemy.setAttackDamage(0);
-            return;
+            return null;
         }
 
         enemy.setAttackDamage(enemy.getAttackDamage() - GameConstants.THE_RIPPER_REDUCE_ATTACK);
         super.setHasAttacked(true);
+
+        return null;
     }
 }
 

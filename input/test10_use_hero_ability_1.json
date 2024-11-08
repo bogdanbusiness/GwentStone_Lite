@@ -379,8 +379,14 @@
           "handIdx": 0
         },
         {
+          "command": "breakpoint"
+        },
+        {
           "command": "useHeroAbility",
           "affectedRow": 0
+        },
+        {
+          "command": "breakpoint"
         },
         {
           "command": "endPlayerTurn"
@@ -390,8 +396,14 @@
           "handIdx": 1
         },
         {
+          "command": "breakpoint"
+        },
+        {
           "command": "useHeroAbility",
           "affectedRow": 2
+        },
+        {
+          "command": "breakpoint"
         },
         {
           "command": "endPlayerTurn"
@@ -401,8 +413,14 @@
           "handIdx": 0
         },
         {
+          "command": "breakpoint"
+        },
+        {
           "command": "useHeroAbility",
           "affectedRow": 1
+        },
+        {
+          "command": "breakpoint"
         },
         {
           "command": "endPlayerTurn"

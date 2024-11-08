@@ -4,6 +4,8 @@ import gameobjects.cards.GenericCard;
 import fileio.CardInput;
 import utils.GameConstants;
 
+import java.util.ArrayList;
+
 public class Disciple extends GenericCard {
     public Disciple() {
         super();
@@ -21,8 +23,14 @@ public class Disciple extends GenericCard {
     }
 
     @Override
-    public final void useAbility(final GenericCard ally) {
+    public final GenericCard useAbility(final ArrayList<GenericCard> cards) {
+        if (cards.isEmpty()) {
+            return null;
+        }
+
+        GenericCard ally = cards.get(0);
         ally.setHealth(ally.getHealth() + GameConstants.DISCIPLE_HEAL);
         super.setHasAttacked(true);
+        return null;
     }
 }

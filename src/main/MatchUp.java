@@ -181,13 +181,23 @@ public final class MatchUp {
                     if (retStringError == null) {
                         break;
                     }
-                    if (retStringError.equals("Player one killed the enemy hero.") ||
-                        retStringError.equals("Player two killed the enemy hero.")) {
+                    if (retStringError.equals("Player one killed the enemy hero.")
+                        || retStringError.equals("Player two killed the enemy hero.")) {
                         objectNode.put("gameEnded", retStringError);
                         break;
                     }
                     objectNode.put("command", action.getCommand());
                     objectNode.set("cardAttacker", attackerHeroCoords.toJson());
+                    objectNode.put("error", retStringError);
+                    break;
+
+                case "useHeroAbility":
+                    retStringError = handleHeroAbility(action.getAffectedRow());
+                    if (retStringError == null) {
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("affectedRow", action.getAffectedRow());
                     objectNode.put("error", retStringError);
                     break;
 
@@ -257,6 +267,12 @@ public final class MatchUp {
                 case "getCardsOnTable":
                     objectNode.put("command", action.getCommand());
                     retArrayNode = field.printAllCardsOnTable();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "getFrozenCardsOnTable":
+                    objectNode.put("command", action.getCommand());
+                    retArrayNode = field.printAllFrozenCardsOnTable();
                     objectNode.set("output", retArrayNode);
                     break;
 
@@ -349,7 +365,7 @@ public final class MatchUp {
     }
 
     /**
-     * Handles the attack command for a card
+     * Handles the ability command for a card
      * @param attackerCoords The coordinates of the attacking card
      * @param defenderCoords The coordinates of the defender card
      * @return Null on success or an error string on failure
@@ -400,7 +416,11 @@ public final class MatchUp {
             }
         }
 
-        attackerCard.useAbility(defenderCard);
+        // Add the card to the list and pass it to the useAbility command
+        ArrayList<GenericCard> defenderCards = new ArrayList<>(1);
+        defenderCards.add(defenderCard);
+
+        attackerCard.useAbility(defenderCards);
         // Check if The Cursed One has killed the card
         if (attackerCard.getName().equals("The Cursed One") && defenderCard.getHealth() == 0) {
             field.removeCard(defenderCoords);
@@ -409,6 +429,11 @@ public final class MatchUp {
         return null;
     }
 
+    /**
+     * Handles the attack of cards on enemy hero
+     * @param attackerCoords The coords of the attacking card
+     * @return Null on success, victory string on game end, error string on failure
+     */
     public String handleAttackHero(final Point attackerCoords) {
         GenericCard attackerCard = field.getCard(attackerCoords);
         if (attackerCard == null) {
@@ -443,6 +468,54 @@ public final class MatchUp {
             }
         }
 
+        return null;
+    }
+
+    /**
+     * Handles the usage of abilities by heroes
+     * @param affectedRow The row affected by the hero ability
+     * @return Null on success, error string on failure
+     */
+    public String handleHeroAbility(int affectedRow) {
+        GenericHero genericHero = playerTurn == 1 ? field.getPlayer1Hero() : field.getPlayer2Hero();
+        Player currentPlayer = playerTurn == 1 ? player1 : player2;
+
+        // Required checks for game mechanics
+        if (genericHero.getMana() > currentPlayer.getMana()) {
+            return "Not enough mana to use hero's ability.";
+        }
+        if (genericHero.isHasAttacked()) {
+            return "Hero has already attacked this turn.";
+        }
+
+        Point rowCoordinates = new Point(affectedRow, 0);
+        if ((genericHero.getName().equals("Lord Royce")
+                || genericHero.getName().equals("Empress Thorina"))
+                && !field.isEnemy(rowCoordinates, playerTurn)) {
+            return "Selected row does not belong to the enemy.";
+        }
+        if ((genericHero.getName().equals("General Kocioraw")
+                || genericHero.getName().equals("King Mudface"))
+                && field.isEnemy(rowCoordinates, playerTurn)) {
+            return "Selected row does not belong to the current player.";
+        }
+
+        // Main logic of the function
+        currentPlayer.expendMana(genericHero.getMana());
+        ArrayList<GenericCard> modifiedCards = field.getRowCards(affectedRow);
+        GenericCard destroyedCard = genericHero.useAbility(modifiedCards);
+        if (destroyedCard == null) {
+            return null;
+        }
+
+        // Removed the destroyed card from the field
+
+        // TODO: FIX THIS BUG
+        Point destroyedCoords = field.getCardPosition(destroyedCard);
+        if (destroyedCoords == null) {
+            return "Something has gone wrong.";
+        }
+        field.removeCard(destroyedCoords);
         return null;
     }
 

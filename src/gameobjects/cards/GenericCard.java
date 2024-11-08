@@ -124,10 +124,11 @@ public class GenericCard {
     /**
      * Uses the ability of the card
      * ATTENTION: THIS CLASS SHOULD NEVER BE CALLED FROM A GenericCard INSTANCE
-     * @param card The card on which the ability is used
+     * @param cards An array list with all the affected cards by the ability
+     * @return Returns a card that has been destroyed, null if there's none
      */
-    public void useAbility(final GenericCard card) {
-        return;
+    public GenericCard useAbility(final ArrayList<GenericCard> cards) {
+        return null;
     }
 
     /**
@@ -146,6 +147,45 @@ public class GenericCard {
     public void reset() {
         this.hasAttacked = false;
         this.isFrozen = false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof GenericCard) {
+            GenericCard genericCard = (GenericCard) obj;
+
+            if (genericCard.getHealth() != this.health) {
+                return false;
+            }
+            if (genericCard.getMana() != this.mana) {
+                return false;
+            }
+            if (genericCard.getAttackDamage() != this.attackDamage) {
+                return false;
+            }
+            if (!genericCard.getName().equals(this.name)) {
+                return false;
+            }
+            if (!genericCard.getDescription().equals(this.description)) {
+                return false;
+            }
+            if (genericCard.getColors().equals(this.colors)) {
+                return false;
+            }
+            if (genericCard.isTank != this.isTank) {
+                return false;
+            }
+            if (genericCard.isFrozen != this.isFrozen) {
+                return false;
+            }
+            if (genericCard.hasAttacked != this.hasAttacked) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -4,6 +4,8 @@ import gameobjects.cards.GenericCard;
 import fileio.CardInput;
 import utils.GameConstants;
 
+import java.util.ArrayList;
+
 public class Miraj extends GenericCard {
     public Miraj() {
         super();
@@ -21,11 +23,19 @@ public class Miraj extends GenericCard {
     }
 
     @Override
-    public final void useAbility(final GenericCard enemy) {
+    public final GenericCard useAbility(final ArrayList<GenericCard> cards) {
+        if (cards.isEmpty()) {
+            return null;
+        }
+
+        GenericCard enemy = cards.get(0);
         int enenmyHP = enemy.getHealth();
         int selfHP = super.getHealth();
+
         enemy.setHealth(selfHP);
         super.setHealth(enenmyHP);
         super.setHasAttacked(true);
+
+        return null;
     }
 }

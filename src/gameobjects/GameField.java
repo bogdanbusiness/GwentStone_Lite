@@ -10,6 +10,8 @@ import lombok.Setter;
 import utils.GameConstants;
 import utils.Point;
 
+import java.util.ArrayList;
+
 public class GameField {
     private final GenericCard[][] field =
             new GenericCard[GameConstants.TABLE_ROWS][GameConstants.TABLE_COLUMNS];
@@ -56,6 +58,22 @@ public class GameField {
         return field[point.getRow()][point.getColumn()];
     }
 
+    public Point getCardPosition(final GenericCard card) {
+        Point returnPoint = new Point();
+
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                if (field[i][j] != null && field[i][j].equals(card)) {
+                    returnPoint.setRow(i);
+                    returnPoint.setColumn(j);
+                    return returnPoint;
+                }
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Removes the card from the field
      * @param point The coordinates of the card on the field
@@ -81,6 +99,22 @@ public class GameField {
                 cards++;
             }
         }
+        return cards;
+    }
+
+    /**
+     * Gets the cards on a row
+     * @param row The row requested
+     * @return An ArrayList instance with all the cards requested
+     */
+    public ArrayList<GenericCard> getRowCards(final int row) {
+        ArrayList<GenericCard> cards = new ArrayList<>(5);
+        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
+            if (field[row][i] != null) {
+                cards.add(field[row][i]);
+            }
+        }
+
         return cards;
     }
 
@@ -159,7 +193,7 @@ public class GameField {
     }
 
     /**
-     * Returns in JSON format the held hand of the player
+     * Returns in JSON format the entire game field
      * @return ArrayNode with the formatted JSON
      */
     public ArrayNode printAllCardsOnTable() {
@@ -176,6 +210,29 @@ public class GameField {
                 }
             }
             output.add(row);
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns in JSON format the frozen cards on the game field
+     * @return ArrayNode with the formatted JSON
+     */
+    public ArrayNode printAllFrozenCardsOnTable() {
+        // Creates the output
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode output = mapper.createArrayNode();
+
+        // Iterate through the entire field
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+//            ArrayNode row = mapper.createArrayNode();
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                if (field[i][j] != null && field[i][j].isFrozen()) {
+                    output.add(field[i][j].printCard());
+                }
+            }
+//            output.add(row);
         }
 
         return output;

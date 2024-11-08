@@ -172,11 +172,17 @@ public class Player {
         mana -= manaExpended;
     }
 
+    /**
+     * Changes statistics for the winning player
+     */
     public void winGame() {
         wonGames++;
         totalGames++;
     }
 
+    /**
+     * Changes statistics for the losing player
+     */
     public void loseGame() {
         totalGames++;
     }
