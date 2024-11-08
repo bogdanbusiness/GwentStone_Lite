@@ -12,6 +12,7 @@ import fileio.Input;
 import gameobjects.GameField;
 import gameobjects.Player;
 
+import gameobjects.cards.GenericHero;
 import lombok.Getter;
 import lombok.Setter;
 import utils.GameConstants;
@@ -29,7 +30,6 @@ public final class MatchUp {
 
     private int playerTurn;
     private int turnCounter;
-    private boolean gameOver;
 
     // TODO: REMOVE THIS
     private int debugBreakpointCounter = 0;
@@ -42,7 +42,6 @@ public final class MatchUp {
         player1 = new Player(input.getPlayerOneDecks());
         player2 = new Player(input.getPlayerTwoDecks());
         turnCounter = 1;
-        gameOver = false;
     }
 
     // Methods
@@ -66,7 +65,6 @@ public final class MatchUp {
         player1.resetPlayer();
         player2.resetPlayer();
         turnCounter = 1;
-        gameOver = false;
     }
 
     /**
@@ -137,10 +135,6 @@ public final class MatchUp {
             int retInt;
             String retStringError;
 
-            if (gameOver) {
-                break;
-            }
-
             // Execute the correct action
             switch (action.getCommand()) {
                 // Gameplay commands
@@ -181,9 +175,20 @@ public final class MatchUp {
                     objectNode.put("error", retStringError);
                     break;
 
-
                 case "useAttackHero":
-
+                    Point attackerHeroCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
+                    retStringError = handleAttackHero(attackerHeroCoords);
+                    if (retStringError == null) {
+                        break;
+                    }
+                    if (retStringError.equals("Player one killed the enemy hero.") ||
+                        retStringError.equals("Player two killed the enemy hero.")) {
+                        objectNode.put("gameEnded", retStringError);
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.set("cardAttacker", attackerHeroCoords.toJson());
+                    objectNode.put("error", retStringError);
                     break;
 
                 case "endPlayerTurn":
@@ -404,6 +409,42 @@ public final class MatchUp {
         return null;
     }
 
+    public String handleAttackHero(final Point attackerCoords) {
+        GenericCard attackerCard = field.getCard(attackerCoords);
+        if (attackerCard == null) {
+            return "Card not found.";
+        }
+
+        // Required checks for game mechanics
+        if (attackerCard.isFrozen()) {
+            return "Attacker card is frozen.";
+        }
+        if (attackerCard.isHasAttacked()) {
+            return "Attacker card has already attacked this turn.";
+        }
+        if (field.getTanksOnRow(playerTurn) != 0) {
+            return "Attacked card is not of type 'Tank'.";
+        }
+
+        // Main logic of the function
+        GenericHero genericHero = playerTurn == 1 ? field.getPlayer2Hero() : field.getPlayer1Hero();
+
+        int attackDealt = attackerCard.attack(genericHero);
+        // If we dealt less damage then normal, then we killed the card
+        if (attackDealt < attackerCard.getAttackDamage()) {
+            if (playerTurn == 1) {
+                player1.winGame();
+                player2.loseGame();
+                return "Player one killed the enemy hero.";
+            } else {
+                player1.loseGame();
+                player2.winGame();
+                return "Player two killed the enemy hero.";
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Finds the card at the coordinates given

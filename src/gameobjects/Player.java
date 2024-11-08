@@ -172,6 +172,15 @@ public class Player {
         mana -= manaExpended;
     }
 
+    public void winGame() {
+        wonGames++;
+        totalGames++;
+    }
+
+    public void loseGame() {
+        totalGames++;
+    }
+
     /**
      * Returns in JSON format the held deck of the player
      * @return ArrayNode with the formatted JSON

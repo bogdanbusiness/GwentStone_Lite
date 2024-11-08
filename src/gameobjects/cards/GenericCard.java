@@ -14,6 +14,7 @@ public class GenericCard {
     private int mana;
     private int health;
     private int attackDamage;
+
     private boolean hasAttacked;
     private boolean isFrozen;
     private boolean isTank;
