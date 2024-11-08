@@ -28,6 +28,7 @@ public class TheRipper extends GenericCard {
         }
 
         enemy.setAttackDamage(enemy.getAttackDamage() - GameConstants.THE_RIPPER_REDUCE_ATTACK);
+        super.setHasAttacked(true);
     }
 }
 

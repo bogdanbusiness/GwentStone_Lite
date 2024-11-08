@@ -50,6 +50,17 @@
   "command" : "cardUsesAbility",
   "cardAttacker" : {
     "x" : 1,
+    "y" : 2
+  },
+  "cardAttacked" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacker card has already attacked this turn."
+}, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 1,
     "y" : 0
   },
   "cardAttacked" : {

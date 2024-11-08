@@ -543,17 +543,6 @@
   },
   "error" : "Card not found."
 }, {
-  "command" : "cardUsesAbility",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 4
-  },
-  "cardAttacked" : {
-    "x" : 1,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -723,8 +712,8 @@
     "name" : "Miraj"
   }, {
     "mana" : 1,
-    "attackDamage" : 6,
-    "health" : 4,
+    "attackDamage" : 4,
+    "health" : 6,
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Black", "Yellow" ],
     "name" : "The Ripper"

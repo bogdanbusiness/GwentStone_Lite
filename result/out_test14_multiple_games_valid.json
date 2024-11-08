@@ -409,17 +409,6 @@
     "name" : "The Ripper"
   }
 }, {
-  "command" : "cardUsesAbility",
-  "cardAttacker" : {
-    "x" : 1,
-    "y" : 0
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
   "output" : 1
@@ -442,17 +431,6 @@
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
-  "command" : "cardUsesAbility",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 2
-  },
-  "cardAttacked" : {
-    "x" : 0,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getCardAtPosition",
   "x" : 1,
   "y" : 0,
@@ -470,7 +448,7 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 5,
+    "attackDamage" : 3,
     "health" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
@@ -497,7 +475,7 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 5,
+    "attackDamage" : 3,
     "health" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
@@ -560,7 +538,7 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 5,
+    "attackDamage" : 3,
     "health" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
@@ -573,7 +551,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 0,
-    "health" : 4,
+    "health" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -584,7 +562,7 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 5,
+    "attackDamage" : 3,
     "health" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
@@ -604,7 +582,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 0,
-    "health" : 6,
+    "health" : 3,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -630,7 +608,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 0,
-    "health" : 6,
+    "health" : 3,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -648,7 +626,7 @@
   "output" : [ [ {
     "mana" : 1,
     "attackDamage" : 0,
-    "health" : 6,
+    "health" : 3,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -703,7 +681,7 @@
     "name" : "The Ripper"
   } ], [ {
     "mana" : 2,
-    "attackDamage" : 5,
+    "attackDamage" : 3,
     "health" : 1,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Red", "Black" ],
@@ -718,7 +696,7 @@
   }, {
     "mana" : 1,
     "attackDamage" : 5,
-    "health" : 1,
+    "health" : 4,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"

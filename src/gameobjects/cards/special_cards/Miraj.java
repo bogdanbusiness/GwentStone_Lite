@@ -26,5 +26,6 @@ public class Miraj extends GenericCard {
         int selfHP = super.getHealth();
         enemy.setHealth(selfHP);
         super.setHealth(enenmyHP);
+        super.setHasAttacked(true);
     }
 }

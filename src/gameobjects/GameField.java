@@ -119,7 +119,7 @@ public class GameField {
     }
 
     /**
-     * Gets the number of tanks on the front row
+     * Gets the number of tanks on the front row of the other player
      * @param playerTurn The turn of the player
      * @return The number of tanks on the row
      */
@@ -128,15 +128,15 @@ public class GameField {
 
         if (playerTurn == 1) {
             for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
-                if (field[GameConstants.PLAYER1_FRONT_ROW][i] != null
-                    && field[GameConstants.PLAYER1_FRONT_ROW][i].isTank()) {
+                if (field[GameConstants.PLAYER2_FRONT_ROW][i] != null
+                    && field[GameConstants.PLAYER2_FRONT_ROW][i].isTank()) {
                     tankNumber++;
                 }
             }
         } else {
             for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
-                if (field[GameConstants.PLAYER2_FRONT_ROW][i] != null
-                    &&  field[GameConstants.PLAYER2_FRONT_ROW][i].isTank()) {
+                if (field[GameConstants.PLAYER1_FRONT_ROW][i] != null
+                    &&  field[GameConstants.PLAYER1_FRONT_ROW][i].isTank()) {
                     tankNumber++;
                 }
             }

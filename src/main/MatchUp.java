@@ -29,6 +29,7 @@ public final class MatchUp {
 
     private int playerTurn;
     private int turnCounter;
+    private boolean gameOver;
 
     // TODO: REMOVE THIS
     private int debugBreakpointCounter = 0;
@@ -41,6 +42,7 @@ public final class MatchUp {
         player1 = new Player(input.getPlayerOneDecks());
         player2 = new Player(input.getPlayerTwoDecks());
         turnCounter = 1;
+        gameOver = false;
     }
 
     // Methods
@@ -64,6 +66,7 @@ public final class MatchUp {
         player1.resetPlayer();
         player2.resetPlayer();
         turnCounter = 1;
+        gameOver = false;
     }
 
     /**
@@ -134,44 +137,13 @@ public final class MatchUp {
             int retInt;
             String retStringError;
 
+            if (gameOver) {
+                break;
+            }
+
             // Execute the correct action
             switch (action.getCommand()) {
-                case "getPlayerDeck":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerDeck() : player2.toJsonPlayerDeck();
-                    objectNode.set("output", retArrayNode);
-                    break;
-
-                case "getPlayerHero":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retObjectNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHero() : player2.toJsonPlayerHero();
-                    objectNode.set("output", retObjectNode);
-                    break;
-
-                case "endPlayerTurn":
-                    // TODO: REMOVE THIS LINE
-//                    System.out.println("ended player turn: " + playerTurn + "\n");
-                    playerTurn = playerTurn == 1 ? 2 : 1;
-                    turnCounter++;
-                    if (turnCounter % 2 == 1) {
-                        startRound();
-                    }
-                    break;
-
-                case "getPlayerTurn":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("output", playerTurn);
-                    break;
-
-                case "getCardsInHand":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHand() : player2.toJsonPlayerHand();
-                    objectNode.set("output", retArrayNode);
-                    break;
-
+                // Gameplay commands
                 case "placeCard":
                     retStringError = handlePlaceCard(action);
                     if (retStringError == null) {
@@ -180,19 +152,6 @@ public final class MatchUp {
                     objectNode.put("command", action.getCommand());
                     objectNode.put("error", retStringError);
                     objectNode.put("handIdx", action.getHandIdx());
-                    break;
-
-                case "getPlayerMana":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retInt = action.getPlayerIdx() == 1 ? player1.getMana() : player2.getMana();
-                    objectNode.put("output", retInt);
-                    break;
-
-                case "getCardsOnTable":
-                    objectNode.put("command", action.getCommand());
-                    retArrayNode = field.printAllCardsOnTable();
-                    objectNode.set("output", retArrayNode);
                     break;
 
                 case "cardUsesAttack":
@@ -222,6 +181,61 @@ public final class MatchUp {
                     objectNode.put("error", retStringError);
                     break;
 
+
+                case "useAttackHero":
+
+                    break;
+
+                case "endPlayerTurn":
+                    // TODO: REMOVE THIS LINE
+//                    System.out.println("ended player turn: " + playerTurn);
+                    playerTurn = playerTurn == 1 ? 2 : 1;
+                    turnCounter++;
+                    if (turnCounter % 2 == 1) {
+                        //TODO: AND THIS ONE
+//                        System.out.println("Reset attacks." + "\n");
+                        startRound();
+                    }
+                    break;
+
+                // Debug commands
+
+                // Directed at the player
+                case "getPlayerDeck":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerDeck() : player2.toJsonPlayerDeck();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "getPlayerHero":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retObjectNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHero() : player2.toJsonPlayerHero();
+                    objectNode.set("output", retObjectNode);
+                    break;
+
+                case "getCardsInHand":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHand() : player2.toJsonPlayerHand();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "getPlayerMana":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retInt = action.getPlayerIdx() == 1 ? player1.getMana() : player2.getMana();
+                    objectNode.put("output", retInt);
+                    break;
+
+                case "getPlayerTurn":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", playerTurn);
+                    break;
+
+                // Directed at the field
+
                 case "getCardAtPosition":
                     objectNode.put("command", action.getCommand());
                     objectNode.put("x", action.getX());
@@ -235,7 +249,12 @@ public final class MatchUp {
                     objectNode.set("output", retObjectNode);
                     break;
 
-//                TODO: Remove debug case
+                case "getCardsOnTable":
+                    objectNode.put("command", action.getCommand());
+                    retArrayNode = field.printAllCardsOnTable();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
                 case "breakpoint":
                     debugBreakpointCounter++;
                     break;
@@ -292,6 +311,10 @@ public final class MatchUp {
         if (attackerCard == null || defenderCard == null) {
             return "Card not found.";
         }
+// TODO: REMOVE THIS
+//        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
+//        System.out.println("defender - x: " + defenderCoords.getRow() +" y: " + defenderCoords.getColumn());
+//        System.out.println("Card name: " + attackerCard.getName());
 
         // Required checks
         if (!field.isEnemy(defenderCoords, playerTurn)) {
@@ -339,6 +362,7 @@ public final class MatchUp {
 //        System.out.println("ATT card: " + attackerCard.getAttackDamage());
 //        System.out.println("hasAttacked: " + attackerCard.isHasAttacked());
 //        System.out.println("HP card: " + defenderCard.getHealth());
+//        System.out.println("Card name: " + attackerCard.getName());
 
         // Required checks
         if (attackerCard.isFrozen()) {
@@ -362,8 +386,12 @@ public final class MatchUp {
             if (!field.isEnemy(defenderCoords, playerTurn)) {
                 return "Attacked card does not belong to the enemy.";
             }
-            if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank()) {
-                return "Attacked card is not of type 'Tank'.";
+
+            if (attackerCard.getName().equals("The Ripper")
+                || attackerCard.getName().equals("Miraj")) {
+                if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank()) {
+                    return "Attacked card is not of type 'Tank'.";
+                }
             }
         }
 

@@ -23,5 +23,6 @@ public class Disciple extends GenericCard {
     @Override
     public final void useAbility(final GenericCard ally) {
         ally.setHealth(ally.getHealth() + GameConstants.DISCIPLE_HEAL);
+        super.setHasAttacked(true);
     }
 }
