@@ -6,9 +6,8 @@ Starting audit...
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\cards\hero_classes\GeneralKocioraw.java:14:5: Class 'GeneralKocioraw' looks like designed for extension (can be subclassed), but the method 'useAbility' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'GeneralKocioraw' final or making the method 'useAbility' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\cards\hero_classes\KingMudface.java:14:5: Class 'KingMudface' looks like designed for extension (can be subclassed), but the method 'useAbility' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'KingMudface' final or making the method 'useAbility' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\cards\hero_classes\LordRoyce.java:14:5: Class 'LordRoyce' looks like designed for extension (can be subclassed), but the method 'useAbility' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'LordRoyce' final or making the method 'useAbility' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:61:5: Class 'GameField' looks like designed for extension (can be subclassed), but the method 'getCardPosition' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'GameField' final or making the method 'getCardPosition' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:61:5: Missing a Javadoc comment. [MissingJavadocMethod]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:111:56: '5' is a magic number. [MagicNumber]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:67:58: Parameter playerTurn should be final. [FinalParameters]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:118:56: '5' is a magic number. [MagicNumber]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\Main.java:83:11: Comment matches to-do format 'TODO:'. [TodoComment]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:34:7: Comment matches to-do format 'TODO:'. [TodoComment]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:124:5: Method length is 171 lines (max allowed is 150). [MethodLength]
@@ -30,7 +29,7 @@ Starting audit...
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:381: Line is longer than 100 characters (found 110). [LineLength]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:382: Line is longer than 100 characters (found 110). [LineLength]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:479:37: Parameter affectedRow should be final. [FinalParameters]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:513:11: Comment matches to-do format 'TODO:'. [TodoComment]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:512:11: Comment matches to-do format 'TODO:'. [TodoComment]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\utils\GameConstants.java:3:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
 Audit done.
-Checkstyle ends with 33 errors.
+Checkstyle ends with 32 errors.

@@ -2,6 +2,7 @@ package utils;
 
 public final class GameConstants {
     public static final int TABLE_ROWS = 4;
+    public static final int TABLE_HALF_ROWS = TABLE_ROWS / 2;
     public static final int TABLE_COLUMNS = 5;
 
     public static final int MAX_MANA = 10;

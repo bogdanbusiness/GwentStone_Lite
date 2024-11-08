@@ -169,8 +169,10 @@ public class GenericCard {
             if (!genericCard.getDescription().equals(this.description)) {
                 return false;
             }
-            if (genericCard.getColors().equals(this.colors)) {
-                return false;
+            for (int i = 0; i < this.colors.size(); i++) {
+                if (!genericCard.getColors().get(i).equals(this.colors.get(i))) {
+                    return false;
+                }
             }
             if (genericCard.isTank != this.isTank) {
                 return false;

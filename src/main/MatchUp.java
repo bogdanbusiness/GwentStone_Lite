@@ -508,10 +508,14 @@ public final class MatchUp {
             return null;
         }
 
-        // Removed the destroyed card from the field
+        // Remove the destroyed card from the field
+        // TODO: REMOVE THIS FROM FIELD
+        System.out.println("HP card: " + destroyedCard.getHealth());
+        System.out.println("Mana Card: " + destroyedCard.getMana());
+        System.out.println("ATT card: " + destroyedCard.getAttackDamage());
+        System.out.println("Card name: " + destroyedCard.getName());
 
-        // TODO: FIX THIS BUG
-        Point destroyedCoords = field.getCardPosition(destroyedCard);
+        Point destroyedCoords = field.getCardPosition(destroyedCard, playerTurn);
         if (destroyedCoords == null) {
             return "Something has gone wrong.";
         }

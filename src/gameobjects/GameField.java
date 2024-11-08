@@ -58,10 +58,17 @@ public class GameField {
         return field[point.getRow()][point.getColumn()];
     }
 
-    public Point getCardPosition(final GenericCard card) {
+    /**
+     * Gets the coordinates of a card on the field
+     * @param card The card on the field
+     * @param playerTurn The turn of the player
+     * @return Returns the Point instance
+     */
+    public Point getCardPosition(final GenericCard card, int playerTurn) {
         Point returnPoint = new Point();
+        int startingRow = playerTurn == 1 ? 0 : 2;
 
-        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+        for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 if (field[i][j] != null && field[i][j].equals(card)) {
                     returnPoint.setRow(i);
@@ -80,7 +87,7 @@ public class GameField {
      */
     public void removeCard(final Point point) {
         // Shifts every column on the row to the left
-        for (int i = point.getRow(); i < GameConstants.TABLE_ROWS; i++) {
+        for (int i = 0; i < GameConstants.TABLE_COLUMNS - 1; i++) {
             field[point.getRow()][i] = field[point.getRow()][i + 1];
         }
         field[point.getRow()][GameConstants.TABLE_COLUMNS - 1] = null;
