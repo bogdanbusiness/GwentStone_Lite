@@ -32,16 +32,6 @@ public class Player {
     private int totalGames;
 
     // Constructor
-    public Player() {
-        possibleDecks = new ArrayList<>();
-        deck = new Deck();
-        hand = new Deck();
-        genericHero = null;
-        mana = 0;
-        wonGames = 0;
-        totalGames = 0;
-    }
-
     public Player(final DecksInput decksInput) {
         // Transfer the deck from the input to the current class
         possibleDecks = new ArrayList<>();

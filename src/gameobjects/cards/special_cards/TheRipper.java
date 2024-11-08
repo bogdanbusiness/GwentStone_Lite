@@ -19,5 +19,15 @@ public class TheRipper extends GenericCard {
     public final int getRowPlacement(final int playerIndex) {
         return playerIndex == 1 ? GameConstants.PLAYER1_FRONT_ROW : GameConstants.PLAYER2_FRONT_ROW;
     }
+
+    @Override
+    public final void useAbility(final GenericCard enemy) {
+        if (enemy.getAttackDamage() < 2) {
+            enemy.setAttackDamage(0);
+            return;
+        }
+
+        enemy.setAttackDamage(enemy.getAttackDamage() - GameConstants.THE_RIPPER_REDUCE_ATTACK);
+    }
 }
 

@@ -11,4 +11,7 @@ public final class GameConstants {
     public static final int PLAYER2_FRONT_ROW = 1;
     public static final int PLAYER1_FRONT_ROW = 2;
     public static final int PLAYER1_BACK_ROW = 3;
+
+    public static final int DISCIPLE_HEAL = 2;
+    public static final int THE_RIPPER_REDUCE_ATTACK = 2;
 }

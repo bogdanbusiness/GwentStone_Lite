@@ -19,4 +19,12 @@ public class Miraj extends GenericCard {
     public final int getRowPlacement(final int playerIndex) {
         return playerIndex == 1 ? GameConstants.PLAYER1_FRONT_ROW : GameConstants.PLAYER2_FRONT_ROW;
     }
+
+    @Override
+    public final void useAbility(final GenericCard enemy) {
+        int enenmyHP = enemy.getHealth();
+        int selfHP = super.getHealth();
+        enemy.setHealth(selfHP);
+        super.setHealth(enenmyHP);
+    }
 }

@@ -173,7 +173,7 @@
     "name" : "Disciple"
   } ], [ {
     "mana" : 1,
-    "attackDamage" : 4,
+    "attackDamage" : 2,
     "health" : 0,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Brown", "Black", "Grey" ],
@@ -319,6 +319,17 @@
   "playerIdx" : 2,
   "output" : 10
 }, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
+}, {
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
@@ -352,6 +363,17 @@
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
   }
+}, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 2,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the current player."
 }, {
   "command" : "getCardAtPosition",
   "x" : 3,
@@ -449,13 +471,24 @@
     "name" : "Disciple"
   }
 }, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 2
+  },
+  "cardAttacked" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "error" : "Attacked card does not belong to the enemy."
+}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 0,
+    "health" : 2,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
@@ -489,7 +522,7 @@
   "output" : {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 0,
+    "health" : 4,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
@@ -509,6 +542,17 @@
     "y" : 4
   },
   "error" : "Card not found."
+}, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 3,
+    "y" : 4
+  },
+  "cardAttacked" : {
+    "x" : 1,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardAtPosition",
   "x" : 0,
@@ -600,6 +644,17 @@
   },
   "error" : "Attacked card is not of type 'Tank'."
 }, {
+  "command" : "cardUsesAbility",
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "cardAttacked" : {
+    "x" : 3,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
+}, {
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
@@ -641,7 +696,7 @@
   }, {
     "mana" : 1,
     "attackDamage" : 5,
-    "health" : 2,
+    "health" : 4,
     "description" : "Standard card: Trained by the best, nothing will catch him off-guard.",
     "colors" : [ "Black", "White" ],
     "name" : "Sentinel"
@@ -662,7 +717,7 @@
   } ], [ {
     "mana" : 1,
     "attackDamage" : 6,
-    "health" : 3,
+    "health" : 0,
     "description" : "Premium card: Insanity is always an option, now it is an absolute.",
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
@@ -682,7 +737,7 @@
     "name" : "Miraj"
   }, {
     "mana" : 1,
-    "attackDamage" : 4,
+    "attackDamage" : 2,
     "health" : 0,
     "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
     "colors" : [ "Brown", "Black", "Grey" ],

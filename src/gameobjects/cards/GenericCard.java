@@ -15,7 +15,6 @@ public class GenericCard {
     private int health;
     private int attackDamage;
     private boolean hasAttacked;
-    private boolean isDead;
     private boolean isFrozen;
     private boolean isTank;
 
@@ -34,7 +33,6 @@ public class GenericCard {
         colors = new ArrayList<>();
         hasAttacked = false;
         isFrozen = false;
-        isDead = false;
     }
 
     public GenericCard(final int mana, final int health, final int attackDamage,
@@ -50,7 +48,6 @@ public class GenericCard {
 
         this.hasAttacked = false;
         this.isFrozen = false;
-        this.isDead = false;
         this.isTank = false;
     }
 
@@ -69,7 +66,6 @@ public class GenericCard {
 
         this.hasAttacked = false;
         this.isFrozen = false;
-        this.isDead = false;
     }
 
     /**
@@ -86,7 +82,6 @@ public class GenericCard {
 
         this.hasAttacked = genericCard.hasAttacked;
         this.isFrozen = genericCard.isFrozen;
-        this.isDead = genericCard.isDead;
         this.isTank = genericCard.isTank;
     }
 
@@ -100,7 +95,6 @@ public class GenericCard {
     public int receiveDamage(final int damage) {
         if (this.health - damage <= 0) {
             this.health = 0;
-            this.isDead = true;
             return this.health;
         }
 
@@ -124,6 +118,15 @@ public class GenericCard {
      */
     public void freeze(final GenericCard enemy) {
         enemy.isFrozen = true;
+    }
+
+    /**
+     * Uses the ability of the card
+     * ATTENTION: THIS CLASS SHOULD NEVER BE CALLED FROM A GenericCard INSTANCE
+     * @param card The card on which the ability is used
+     */
+    public void useAbility(final GenericCard card) {
+        return;
     }
 
     /**

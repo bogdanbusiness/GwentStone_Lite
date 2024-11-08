@@ -196,15 +196,29 @@ public final class MatchUp {
                     break;
 
                 case "cardUsesAttack":
-                    Point attackerCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
-                    Point defenderCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
-                    retStringError = handleAttackCard(attackerCoords, defenderCoords);
+                    Point attackerAttackCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
+                    Point defenderAttackCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
+                    retStringError = handleAttackCard(attackerAttackCoords, defenderAttackCoords);
                     if (retStringError == null) {
                         break;
                     }
                     objectNode.put("command", action.getCommand());
-                    objectNode.set("cardAttacker", attackerCoords.toJson());
-                    objectNode.set("cardAttacked", defenderCoords.toJson());
+                    objectNode.set("cardAttacker", attackerAttackCoords.toJson());
+                    objectNode.set("cardAttacked", defenderAttackCoords.toJson());
+                    objectNode.put("error", retStringError);
+                    break;
+
+                case "cardUsesAbility":
+                    Point attackerAbilityCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
+                    Point defenderAbilityCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
+                    retStringError =
+                            handleUsesAbilityCard(attackerAbilityCoords, defenderAbilityCoords);
+                    if (retStringError == null) {
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.set("cardAttacker", attackerAbilityCoords.toJson());
+                    objectNode.set("cardAttacked", defenderAbilityCoords.toJson());
                     objectNode.put("error", retStringError);
                     break;
 
@@ -275,24 +289,15 @@ public final class MatchUp {
     public String handleAttackCard(final Point attackerCoords, final Point defenderCoords) {
         GenericCard attackerCard = field.getCard(attackerCoords);
         GenericCard defenderCard = field.getCard(defenderCoords);
-
-        // TODO: Remove this
-//        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
-//        System.out.println("defender - x: " + defenderCoords.getRow() +" y: " + defenderCoords.getColumn());
-//        System.out.println("ATT card: " + attackerCard.getAttackDamage());
-//        System.out.println("hasAttacked: " + attackerCard.isHasAttacked());
-//        System.out.println("HP card: " + defenderCard.getHealth());
-
         if (attackerCard == null || defenderCard == null) {
             return "Card not found.";
         }
 
-        // Check if the defender is an enemy
+        // Required checks
         if (!field.isEnemy(defenderCoords, playerTurn)) {
             return "Attacked card does not belong to the enemy.";
         }
 
-        // Check if the attacker has attacked already this turn
         if (attackerCard.isHasAttacked()) {
             return "Attacker card has already attacked this turn.";
         }
@@ -314,6 +319,63 @@ public final class MatchUp {
 
         return null;
     }
+
+    /**
+     * Handles the attack command for a card
+     * @param attackerCoords The coordinates of the attacking card
+     * @param defenderCoords The coordinates of the defender card
+     * @return Null on success or an error string on failure
+     */
+    public String handleUsesAbilityCard(final Point attackerCoords, final Point defenderCoords) {
+        GenericCard attackerCard = field.getCard(attackerCoords);
+        GenericCard defenderCard = field.getCard(defenderCoords);
+        if (attackerCard == null || defenderCard == null) {
+            return "Card not found.";
+        }
+
+        // TODO: Remove this
+//        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
+//        System.out.println("defender - x: " + defenderCoords.getRow() +" y: " + defenderCoords.getColumn());
+//        System.out.println("ATT card: " + attackerCard.getAttackDamage());
+//        System.out.println("hasAttacked: " + attackerCard.isHasAttacked());
+//        System.out.println("HP card: " + defenderCard.getHealth());
+
+        // Required checks
+        if (attackerCard.isFrozen()) {
+            return "Attacker card is frozen.";
+        }
+
+        if (attackerCard.isHasAttacked()) {
+            return "Attacker card has already attacked this turn.";
+        }
+
+        // Check if the card is an ally for the ability of Disciple
+        if (attackerCard.getName().equals("Disciple")
+            && field.isEnemy(defenderCoords, playerTurn)) {
+            return "Attacked card does not belong to the current player.";
+        }
+
+        // Check if the card is an enemy for the abilities of The Ripper/Miraj/Cursed One
+        if (attackerCard.getName().equals("The Ripper")
+            || attackerCard.getName().equals("Miraj")
+            || attackerCard.getName().equals("The Cursed One")) {
+            if (!field.isEnemy(defenderCoords, playerTurn)) {
+                return "Attacked card does not belong to the enemy.";
+            }
+            if (field.getTanksOnRow(playerTurn) != 0 && !defenderCard.isTank()) {
+                return "Attacked card is not of type 'Tank'.";
+            }
+        }
+
+        attackerCard.useAbility(defenderCard);
+        // Check if The Cursed One has killed the card
+        if (attackerCard.getName().equals("The Cursed One") && defenderCard.getHealth() == 0) {
+            field.removeCard(defenderCoords);
+        }
+
+        return null;
+    }
+
 
     /**
      * Finds the card at the coordinates given

@@ -5,13 +5,15 @@ Starting audit...
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:149: Line is longer than 100 characters (found 121). [LineLength]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:154:23: Comment matches to-do format 'TODO:'. [TodoComment]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:171: Line is longer than 100 characters (found 120). [LineLength]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:199: Line is longer than 100 characters (found 119). [LineLength]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:200: Line is longer than 100 characters (found 119). [LineLength]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:224:3: Comment matches to-do format 'TODO:'. [TodoComment]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:250: Line is longer than 100 characters (found 121). [LineLength]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:279:11: Comment matches to-do format 'TODO:'. [TodoComment]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:280: Line is longer than 100 characters (found 110). [LineLength]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:281: Line is longer than 100 characters (found 110). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:199: Line is longer than 100 characters (found 125). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:200: Line is longer than 100 characters (found 125). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:212: Line is longer than 100 characters (found 126). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:213: Line is longer than 100 characters (found 126). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:238:3: Comment matches to-do format 'TODO:'. [TodoComment]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:264: Line is longer than 100 characters (found 121). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:336:11: Comment matches to-do format 'TODO:'. [TodoComment]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:337: Line is longer than 100 characters (found 110). [LineLength]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:338: Line is longer than 100 characters (found 110). [LineLength]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\utils\GameConstants.java:3:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
 Audit done.
-Checkstyle ends with 14 errors.
+Checkstyle ends with 16 errors.
