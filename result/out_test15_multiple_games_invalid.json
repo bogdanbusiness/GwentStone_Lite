@@ -308,13 +308,6 @@
   "command" : "getPlayerTurn",
   "output" : 2
 }, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 1,
-    "y" : 0
-  },
-  "error" : "Attacker card has already attacked this turn."
-}, {
   "command" : "getCardAtPosition",
   "x" : 3,
   "y" : 0,

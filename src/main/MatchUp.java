@@ -114,7 +114,7 @@ public final class MatchUp {
         player2.drawCardFromDeck();
 
         // Reset the field statuses
-        field.resetStatusForCards();
+        field.resetAttackForCards();
     }
 
     /**
@@ -203,14 +203,31 @@ public final class MatchUp {
 
                 case "endPlayerTurn":
                     // TODO: REMOVE THIS LINE
-//                    System.out.println("ended player turn: " + playerTurn);
+                    System.out.println("ended player turn: " + playerTurn);
+                    field.unfreezePlayerCards(playerTurn);
+                    System.out.println("Reset freeze: " + playerTurn + "\n");
                     playerTurn = playerTurn == 1 ? 2 : 1;
                     turnCounter++;
                     if (turnCounter % 2 == 1) {
                         //TODO: AND THIS ONE
-//                        System.out.println("Reset attacks." + "\n");
                         startRound();
                     }
+                    break;
+
+                // Statistics
+                case "getPlayerOneWins":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", player1.getWonGames());
+                    break;
+
+                case "getPlayerTwoWins":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", player2.getWonGames());
+                    break;
+
+                case "getTotalGamesPlayed":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", player1.getTotalGames());
                     break;
 
                 // Debug commands
@@ -510,12 +527,15 @@ public final class MatchUp {
 
         // Remove the destroyed card from the field
         // TODO: REMOVE THIS FROM FIELD
-        System.out.println("HP card: " + destroyedCard.getHealth());
-        System.out.println("Mana Card: " + destroyedCard.getMana());
-        System.out.println("ATT card: " + destroyedCard.getAttackDamage());
-        System.out.println("Card name: " + destroyedCard.getName());
+//        System.out.println("HP card: " + destroyedCard.getHealth());
+//        System.out.println("Mana Card: " + destroyedCard.getMana());
+//        System.out.println("ATT card: " + destroyedCard.getAttackDamage());
+//        System.out.println("Card name: " + destroyedCard.getName());
 
-        Point destroyedCoords = field.getCardPosition(destroyedCard, playerTurn);
+        // We have to search the opposite player's half of
+        // the table to be sure we get the right card
+        int startingRow = playerTurn == 1 ? 0 : 2;
+        Point destroyedCoords = field.getCardPosition(destroyedCard, startingRow);
         if (destroyedCoords == null) {
             return "Something has gone wrong.";
         }

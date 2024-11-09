@@ -61,13 +61,11 @@ public class GameField {
     /**
      * Gets the coordinates of a card on the field
      * @param card The card on the field
-     * @param playerTurn The turn of the player
+     * @param startingRow The row from which the search starts
      * @return Returns the Point instance
      */
-    public Point getCardPosition(final GenericCard card, int playerTurn) {
+    public Point getCardPosition(final GenericCard card, int startingRow) {
         Point returnPoint = new Point();
-        int startingRow = playerTurn == 1 ? 0 : 2;
-
         for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 if (field[i][j] != null && field[i][j].equals(card)) {
@@ -189,11 +187,27 @@ public class GameField {
     /**
      * Enables cards to attack again and unfreezes them
      */
-    public void resetStatusForCards() {
+    public void resetAttackForCards() {
         for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 if (field[i][j] != null) {
-                    field[i][j].reset();
+                    field[i][j].setHasAttacked(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Unfreezes all the cards that belong to a player
+     * @param playerTurn The player to which the cards belong to
+     */
+    public void unfreezePlayerCards(int playerTurn) {
+        int startingRow = playerTurn == 1 ? 2 : 0;
+
+        for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                if (field[i][j] != null) {
+                    field[i][j].setHasAttacked(false);
                 }
             }
         }

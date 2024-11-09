@@ -380,9 +380,6 @@
           "handIdx": 1
         },
         {
-          "command": "breakpoint"
-        },
-        {
           "command": "useHeroAbility",
           "affectedRow": 1
         },
@@ -394,15 +391,8 @@
           "handIdx": 1
         },
         {
-          "command": "breakpoint"
-        },
-        {
           "command": "useHeroAbility",
           "affectedRow": 1
-        },
-
-        {
-          "command": "breakpoint"
         },
         {
           "command": "endPlayerTurn"
@@ -410,10 +400,6 @@
         {
           "command": "placeCard",
           "handIdx": 1
-        },
-
-        {
-          "command": "breakpoint"
         },
         {
           "command": "getCardAtPosition",

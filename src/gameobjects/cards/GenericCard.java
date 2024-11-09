@@ -141,14 +141,6 @@ public class GenericCard {
         return 0;
     }
 
-    /**
-     * Resets a card after the turn is over
-     */
-    public void reset() {
-        this.hasAttacked = false;
-        this.isFrozen = false;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof GenericCard) {
