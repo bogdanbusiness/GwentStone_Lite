@@ -205,11 +205,11 @@ public final class MatchUp {
                     // TODO: REMOVE THIS LINE
                     System.out.println("ended player turn: " + playerTurn);
                     field.unfreezePlayerCards(playerTurn);
-                    System.out.println("Reset freeze: " + playerTurn + "\n");
                     playerTurn = playerTurn == 1 ? 2 : 1;
                     turnCounter++;
                     if (turnCounter % 2 == 1) {
                         //TODO: AND THIS ONE
+                        System.out.println("New round.\n");
                         startRound();
                     }
                     break;

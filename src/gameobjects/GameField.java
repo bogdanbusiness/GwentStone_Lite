@@ -85,7 +85,7 @@ public class GameField {
      */
     public void removeCard(final Point point) {
         // Shifts every column on the row to the left
-        for (int i = 0; i < GameConstants.TABLE_COLUMNS - 1; i++) {
+        for (int i = point.getColumn(); i < GameConstants.TABLE_COLUMNS - 1; i++) {
             field[point.getRow()][i] = field[point.getRow()][i + 1];
         }
         field[point.getRow()][GameConstants.TABLE_COLUMNS - 1] = null;
@@ -247,13 +247,11 @@ public class GameField {
 
         // Iterate through the entire field
         for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
-//            ArrayNode row = mapper.createArrayNode();
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 if (field[i][j] != null && field[i][j].isFrozen()) {
                     output.add(field[i][j].printCard());
                 }
             }
-//            output.add(row);
         }
 
         return output;

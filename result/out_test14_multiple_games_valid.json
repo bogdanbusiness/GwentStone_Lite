@@ -69,20 +69,6 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
   "output" : 4
@@ -112,49 +98,17 @@
   "playerIdx" : 2,
   "output" : 8
 }, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 0,
-    "y" : 0
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 2
-  },
-  "error" : "Card not found."
-}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 9,
-    "health" : 0,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Brown", "Blue" ],
-    "name" : "Warden"
+    "attackDamage" : 5,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
   }
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 2
-  },
-  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
@@ -164,11 +118,11 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 9,
-    "health" : 0,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Brown", "Blue" ],
-    "name" : "Warden"
+    "attackDamage" : 5,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
@@ -195,11 +149,11 @@
   "y" : 0,
   "output" : {
     "mana" : 2,
-    "attackDamage" : 10,
-    "health" : 0,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Brown", "Blue" ],
-    "name" : "Warden"
+    "attackDamage" : 4,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
   }
 }, {
   "command" : "getPlayerTurn",
@@ -282,17 +236,6 @@
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
-  "command" : "cardUsesAbility",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 2
-  },
-  "cardAttacked" : {
-    "x" : 1,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getCardAtPosition",
   "x" : 0,
   "y" : 0,
@@ -312,40 +255,10 @@
   "playerIdx" : 2,
   "output" : 67
 }, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 4
-  },
-  "cardAttacked" : {
-    "x" : 1,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 3
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 3,
-    "y" : 1
-  },
-  "error" : "Attacked card is not of type 'Tank'."
+  "gameEnded" : "Player one killed the enemy hero."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -392,12 +305,12 @@
     "colors" : [ "Black", "White", "Red" ],
     "name" : "The Cursed One"
   } ], [ {
-    "mana" : 1,
-    "attackDamage" : 4,
-    "health" : 7,
-    "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
-    "colors" : [ "Red", "Purple" ],
-    "name" : "Goliath"
+    "mana" : 2,
+    "attackDamage" : 3,
+    "health" : 10,
+    "description" : "Standard card: Death incarnate. No better time to die than now.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
   }, {
     "mana" : 1,
     "attackDamage" : 5,
@@ -405,23 +318,16 @@
     "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
-  }, {
-    "mana" : 2,
-    "attackDamage" : 8,
-    "health" : 0,
-    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
-    "colors" : [ "Brown", "Black", "Grey" ],
-    "name" : "Goliath"
   } ], [ {
     "mana" : 2,
-    "attackDamage" : 11,
-    "health" : 0,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Brown", "Blue" ],
-    "name" : "Warden"
+    "attackDamage" : 5,
+    "health" : 7,
+    "description" : "Premium card: No matter how many, his body will fight. Save your breath for the Mountain is strong.",
+    "colors" : [ "Red", "Purple" ],
+    "name" : "Goliath"
   }, {
     "mana" : 1,
-    "attackDamage" : 3,
+    "attackDamage" : 5,
     "health" : 7,
     "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
     "colors" : [ "Brown", "Blue" ],
@@ -547,13 +453,6 @@
   "command" : "getPlayerTurn",
   "output" : 1
 }, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
@@ -562,11 +461,11 @@
   "y" : 0,
   "output" : {
     "mana" : 1,
-    "attackDamage" : 6,
-    "health" : 0,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Black", "White", "Green" ],
-    "name" : "Warden"
+    "attackDamage" : 3,
+    "health" : 5,
+    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
@@ -578,30 +477,16 @@
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 0
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
-  "command" : "useAttackHero",
-  "cardAttacker" : {
-    "x" : 2,
-    "y" : 3
-  },
-  "error" : "Card not found."
-}, {
   "command" : "getCardAtPosition",
   "x" : 1,
   "y" : 0,
   "output" : {
     "mana" : 1,
-    "attackDamage" : 6,
-    "health" : 0,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Black", "White", "Green" ],
-    "name" : "Warden"
+    "attackDamage" : 3,
+    "health" : 5,
+    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
@@ -611,12 +496,12 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
-    "attackDamage" : 5,
-    "health" : 4,
-    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
-    "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "mana" : 2,
+    "attackDamage" : 3,
+    "health" : 5,
+    "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
+    "colors" : [ "Red", "Black" ],
+    "name" : "Miraj"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
@@ -630,37 +515,26 @@
   "y" : 0,
   "output" : {
     "mana" : 1,
-    "attackDamage" : 6,
-    "health" : 2,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Black", "White", "Green" ],
-    "name" : "Warden"
+    "attackDamage" : 3,
+    "health" : 7,
+    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 0,
-    "y" : 0
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 3
-  },
-  "error" : "Card not found."
-}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
-    "attackDamage" : 5,
-    "health" : 4,
-    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
-    "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "mana" : 2,
+    "attackDamage" : 3,
+    "health" : 0,
+    "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
+    "colors" : [ "Red", "Black" ],
+    "name" : "Miraj"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
@@ -708,11 +582,11 @@
   "y" : 0,
   "output" : {
     "mana" : 1,
-    "attackDamage" : 6,
-    "health" : 4,
-    "description" : "Standard card: He has seen everything, his mind has never been asleep since the making of the realm.",
-    "colors" : [ "Black", "White", "Green" ],
-    "name" : "Warden"
+    "attackDamage" : 3,
+    "health" : 9,
+    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
   }
 }, {
   "command" : "getFrozenCardsOnTable",
@@ -732,27 +606,16 @@
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
 }, {
-  "command" : "cardUsesAttack",
-  "cardAttacker" : {
-    "x" : 0,
-    "y" : 3
-  },
-  "cardAttacked" : {
-    "x" : 2,
-    "y" : 3
-  },
-  "error" : "Attacked card is not of type 'Tank'."
-}, {
   "command" : "getCardAtPosition",
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
-    "attackDamage" : 5,
-    "health" : 7,
-    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
-    "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "mana" : 2,
+    "attackDamage" : 3,
+    "health" : 3,
+    "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
+    "colors" : [ "Red", "Black" ],
+    "name" : "Miraj"
   }
 }, {
   "command" : "getCardAtPosition",
@@ -761,7 +624,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 2,
-    "health" : 8,
+    "health" : 1,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -771,12 +634,12 @@
   "x" : 2,
   "y" : 0,
   "output" : {
-    "mana" : 1,
-    "attackDamage" : 5,
-    "health" : 7,
-    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
-    "colors" : [ "Orange", "Red", "Black" ],
-    "name" : "The Ripper"
+    "mana" : 2,
+    "attackDamage" : 3,
+    "health" : 3,
+    "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
+    "colors" : [ "Red", "Black" ],
+    "name" : "Miraj"
   }
 }, {
   "command" : "getPlayerTurn",
@@ -795,7 +658,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 2,
-    "health" : 10,
+    "health" : 3,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -827,7 +690,7 @@
   "output" : {
     "mana" : 1,
     "attackDamage" : 2,
-    "health" : 10,
+    "health" : 3,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -869,7 +732,7 @@
   "output" : [ [ {
     "mana" : 1,
     "attackDamage" : 2,
-    "health" : 10,
+    "health" : 3,
     "description" : "Standard card: Everything is sacred to him, all is but a gift from the saints.",
     "colors" : [ "Green", "Yellow", "Blue" ],
     "name" : "Disciple"
@@ -903,19 +766,33 @@
     "name" : "Berserker"
   } ], [ {
     "mana" : 1,
-    "attackDamage" : 7,
+    "attackDamage" : 4,
+    "health" : 11,
+    "description" : "Premium card: Ravished by the winds of hell, no soul is to be forgiven.",
+    "colors" : [ "Orange", "Red", "Black" ],
+    "name" : "The Ripper"
+  }, {
+    "mana" : 1,
+    "attackDamage" : 5,
     "health" : 0,
     "description" : "Standard card: A warrior who is never afraid of battle, no matter the costs",
     "colors" : [ "Red", "Purple" ],
     "name" : "Goliath"
   }, {
     "mana" : 2,
-    "attackDamage" : 5,
-    "health" : 5,
+    "attackDamage" : 3,
+    "health" : 10,
     "description" : "Standard card: Death incarnate. No better time to die than now.",
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
   } ], [ {
+    "mana" : 2,
+    "attackDamage" : 3,
+    "health" : 3,
+    "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
+    "colors" : [ "Red", "Black" ],
+    "name" : "Miraj"
+  }, {
     "mana" : 1,
     "attackDamage" : 5,
     "health" : 8,
@@ -925,14 +802,14 @@
   }, {
     "mana" : 1,
     "attackDamage" : 5,
-    "health" : 4,
+    "health" : 13,
     "description" : "Standard card: When he is near, close your eyes. They betray your mind.",
     "colors" : [ "Yellow", "Orange", "Red" ],
     "name" : "Miraj"
   }, {
     "mana" : 2,
     "attackDamage" : 7,
-    "health" : 10,
+    "health" : 8,
     "description" : "Premium card: You shall not pass, you shall not prevail, you shall perish.",
     "colors" : [ "Black", "White", "Green" ],
     "name" : "Warden"
@@ -987,4 +864,13 @@
   "command" : "getCardsInHand",
   "playerIdx" : 2,
   "output" : [ ]
+}, {
+  "command" : "getPlayerOneWins",
+  "output" : 0
+}, {
+  "command" : "getPlayerTwoWins",
+  "output" : 0
+}, {
+  "command" : "getTotalGamesPlayed",
+  "output" : 0
 } ]

@@ -19,7 +19,7 @@ public class LordRoyce extends GenericHero {
 
         // Freeze all the cards
         for (GenericCard enemy : cards) {
-            enemy.freeze(this);
+            this.freeze(enemy);
         }
 
         return null;
