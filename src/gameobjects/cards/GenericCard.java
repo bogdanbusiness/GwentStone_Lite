@@ -142,10 +142,8 @@ public class GenericCard {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof GenericCard) {
-            GenericCard genericCard = (GenericCard) obj;
-
+    public final boolean equals(final Object obj) {
+        if (obj instanceof GenericCard genericCard) {
             if (genericCard.getHealth() != this.health) {
                 return false;
             }

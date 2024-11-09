@@ -5,8 +5,8 @@ import checker.Checker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import checker.CheckerConstants;
 
+import checker.CheckerConstants;
 import fileio.Input;
 
 import java.io.File;
@@ -79,9 +79,6 @@ public final class Main {
             ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
             objectWriter.writeValue(new File(filePath2), output);
         }
-
-        // TODO: Remove this line
-        System.out.println("Test done.\n");
     }
 }
 

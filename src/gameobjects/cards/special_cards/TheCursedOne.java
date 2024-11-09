@@ -7,12 +7,12 @@ import utils.GameConstants;
 import java.util.ArrayList;
 
 public class TheCursedOne extends GenericCard {
-    public TheCursedOne() {
-        super();
+    public TheCursedOne(final CardInput card) {
+        super(card);
         super.setTank(false);
     }
 
-    public TheCursedOne(final CardInput card) {
+    public TheCursedOne(final GenericCard card) {
         super(card);
         super.setTank(false);
     }

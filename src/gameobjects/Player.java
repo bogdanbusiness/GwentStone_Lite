@@ -69,8 +69,6 @@ public class Player {
         genericHero = null;
 
         mana = 0;
-        wonGames = 0;
-        totalGames = 0;
     }
 
     /**

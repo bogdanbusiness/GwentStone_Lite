@@ -11,6 +11,11 @@ public class LordRoyce extends GenericHero {
         super(mana, name, description, colors);
     }
 
+    /**
+     * Freezes all the affected cards
+     * @param cards An array list with all the affected cards by the ability
+     * @return Null
+     */
     @Override
     public GenericCard useAbility(final ArrayList<GenericCard> cards) {
         if (cards.isEmpty()) {

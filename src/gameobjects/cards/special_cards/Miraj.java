@@ -17,6 +17,11 @@ public class Miraj extends GenericCard {
         super.setTank(false);
     }
 
+    public Miraj(final GenericCard card) {
+        super(card);
+        super.setTank(false);
+    }
+
     @Override
     public final int getRowPlacement(final int playerIndex) {
         return playerIndex == 1 ? GameConstants.PLAYER1_FRONT_ROW : GameConstants.PLAYER2_FRONT_ROW;

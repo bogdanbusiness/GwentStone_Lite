@@ -35,8 +35,11 @@ public class Deck {
     }
 
     public Deck(final Deck copyDeck) {
-        numCards = copyDeck.deck.size();
-        this.deck = new ArrayList<>(copyDeck.deck);
+        numCards = 0;
+        this.deck = new ArrayList<>();
+        for (int i = 0; i < copyDeck.numCards; i++) {
+            this.addToEndOfDeck(copyDeck.deck.get(i));
+        }
     }
 
     // Methods
@@ -83,21 +86,53 @@ public class Deck {
     }
 
     /**
+     * Adds a card to the deck
+     * ATTENTION: This method is responsible for the creation of classes for each card type
+     * @param card The CardInput instance that will be added
+     */
+    public void addToEndOfDeck(final GenericCard card) {
+        GenericCard newGenericCard;
+        switch (card.getName()) {
+            case "Sentinel":
+                newGenericCard = new Sentinel(card);
+                break;
+            case "Berserker":
+                newGenericCard = new Berserker(card);
+                break;
+            case "Goliath":
+                newGenericCard = new Goliath(card);
+                break;
+            case "Warden":
+                newGenericCard = new Warden(card);
+                break;
+            case "Miraj":
+                newGenericCard = new Miraj(card);
+                break;
+            case "The Ripper":
+                newGenericCard = new TheRipper(card);
+                break;
+            case "The Cursed One":
+                newGenericCard = new TheCursedOne(card);
+                break;
+            case "Disciple":
+                newGenericCard = new Disciple(card);
+                break;
+            default:
+                newGenericCard = new GenericCard(card);
+                System.out.println("Card not recognized.");
+                System.out.println(card.getName());
+        }
+        deck.add(newGenericCard);
+        numCards++;
+    }
+
+    /**
      * Adds a card to the specified index
      * @param genericCard The GenericCard instance that will be added
      * @param handIndex The index where the card will be placed
      */
     public void addToIndexInDeck(final GenericCard genericCard, final int handIndex) {
         deck.add(handIndex, genericCard);
-        numCards++;
-    }
-
-    /**
-     *  Adds a card to the start of the deck
-     * @param genericCard The GenericCard instance that will be added
-     */
-    public void addToStartOfDeck(final GenericCard genericCard) {
-        deck.add(0, genericCard);
         numCards++;
     }
 
@@ -138,14 +173,6 @@ public class Deck {
         GenericCard ret = deck.remove(0);
         numCards--;
         return ret;
-    }
-
-    /**
-     * Resets the deck
-     */
-    public void resetDeck() {
-        deck.clear();
-        numCards = 0;
     }
 
     /**

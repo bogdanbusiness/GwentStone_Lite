@@ -15,6 +15,11 @@ public class Goliath extends GenericCard {
         super.setTank(true);
     }
 
+    public Goliath(final GenericCard card) {
+        super(card);
+        super.setTank(true);
+    }
+
     @Override
     public final int getRowPlacement(final int playerIndex) {
         return playerIndex == 1 ? GameConstants.PLAYER1_FRONT_ROW : GameConstants.PLAYER2_FRONT_ROW;

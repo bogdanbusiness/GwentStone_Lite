@@ -7,12 +7,12 @@ import utils.GameConstants;
 import java.util.ArrayList;
 
 public class TheRipper extends GenericCard {
-    public TheRipper() {
-        super();
+    public TheRipper(final CardInput card) {
+        super(card);
         super.setTank(false);
     }
 
-    public TheRipper(final CardInput card) {
+    public TheRipper(final GenericCard card) {
         super(card);
         super.setTank(false);
     }

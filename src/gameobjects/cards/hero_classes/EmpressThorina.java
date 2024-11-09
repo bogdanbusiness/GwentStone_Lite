@@ -11,8 +11,13 @@ public class EmpressThorina extends GenericHero {
         super(mana, name, description, colors);
     }
 
+    /**
+     * Searches for the highest health card in the affected cards and returns it to be destroyed
+     * @param cards An array list with all the affected cards by the ability
+     * @return The card that will be destroyed
+     */
     @Override
-    public GenericCard useAbility(final ArrayList<GenericCard> cards) {
+    public final GenericCard useAbility(final ArrayList<GenericCard> cards) {
         if (cards.isEmpty()) {
             return null;
         }

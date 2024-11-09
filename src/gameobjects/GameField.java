@@ -64,7 +64,7 @@ public class GameField {
      * @param startingRow The row from which the search starts
      * @return Returns the Point instance
      */
-    public Point getCardPosition(final GenericCard card, int startingRow) {
+    public Point getCardPosition(final GenericCard card, final int startingRow) {
         Point returnPoint = new Point();
         for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
@@ -113,7 +113,7 @@ public class GameField {
      * @return An ArrayList instance with all the cards requested
      */
     public ArrayList<GenericCard> getRowCards(final int row) {
-        ArrayList<GenericCard> cards = new ArrayList<>(5);
+        ArrayList<GenericCard> cards = new ArrayList<>(GameConstants.TABLE_ROWS);
         for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
             if (field[row][i] != null) {
                 cards.add(field[row][i]);
@@ -201,7 +201,7 @@ public class GameField {
      * Unfreezes all the cards that belong to a player
      * @param playerTurn The player to which the cards belong to
      */
-    public void unfreezePlayerCards(int playerTurn) {
+    public void unfreezePlayerCards(final int playerTurn) {
         int startingRow = playerTurn == 1 ? 2 : 0;
 
         for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {

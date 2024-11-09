@@ -1,6 +1,6 @@
 package main;
 
-import gameobjects.cards.GenericCard;
+import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -11,15 +11,15 @@ import fileio.Input;
 
 import gameobjects.GameField;
 import gameobjects.Player;
-
+import gameobjects.cards.GenericCard;
 import gameobjects.cards.GenericHero;
-import gameobjects.cards.hero_classes.LordRoyce;
-import lombok.Getter;
-import lombok.Setter;
+
 import utils.GameConstants;
 import utils.Point;
 
-import java.util.ArrayList;
+import lombok.Getter;
+import lombok.Setter;
+
 
 @Getter @Setter
 public final class MatchUp {
@@ -31,9 +31,6 @@ public final class MatchUp {
 
     private int playerTurn;
     private int turnCounter;
-
-    // TODO: REMOVE THIS
-    private int debugBreakpointCounter = 0;
 
     // Constructors
 
@@ -186,6 +183,7 @@ public final class MatchUp {
                     }
                     if (retStringError.equals("Player one killed the enemy hero.")
                         || retStringError.equals("Player two killed the enemy hero.")) {
+                        System.out.println("Enemy hero killed");
                         objectNode.put("gameEnded", retStringError);
                         break;
                     }
@@ -205,14 +203,10 @@ public final class MatchUp {
                     break;
 
                 case "endPlayerTurn":
-                    // TODO: REMOVE THIS LINE
-                    System.out.println("ended player turn: " + playerTurn);
                     field.unfreezePlayerCards(playerTurn);
                     playerTurn = playerTurn == 1 ? 2 : 1;
                     turnCounter++;
                     if (turnCounter % 2 == 1) {
-                        //TODO: AND THIS ONE
-                        System.out.println("New round.\n");
                         startRound();
                     }
                     break;
@@ -297,7 +291,6 @@ public final class MatchUp {
                     break;
 
                 case "breakpoint":
-                    debugBreakpointCounter++;
                     break;
 
                 default:
@@ -352,10 +345,6 @@ public final class MatchUp {
         if (attackerCard == null || defenderCard == null) {
             return "Card not found.";
         }
-// TODO: REMOVE THIS
-//        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
-//        System.out.println("defender - x: " + defenderCoords.getRow() +" y: " + defenderCoords.getColumn());
-//        System.out.println("Card name: " + attackerCard.getName());
 
         // Required checks
         if (!field.isEnemy(defenderCoords, playerTurn)) {
@@ -396,14 +385,6 @@ public final class MatchUp {
         if (attackerCard == null || defenderCard == null) {
             return "Card not found.";
         }
-
-        // TODO: Remove this
-//        System.out.println("attacker - x: " + attackerCoords.getRow() +" y: " + attackerCoords.getColumn());
-//        System.out.println("defender - x: " + defenderCoords.getRow() +" y: " + defenderCoords.getColumn());
-//        System.out.println("ATT card: " + attackerCard.getAttackDamage());
-//        System.out.println("hasAttacked: " + attackerCard.isHasAttacked());
-//        System.out.println("HP card: " + defenderCard.getHealth());
-//        System.out.println("Card name: " + attackerCard.getName());
 
         // Required checks
         if (attackerCard.isFrozen()) {
@@ -496,7 +477,7 @@ public final class MatchUp {
      * @param affectedRow The row affected by the hero ability
      * @return Null on success, error string on failure
      */
-    public String handleHeroAbility(int affectedRow) {
+    public String handleHeroAbility(final int affectedRow) {
         GenericHero genericHero = playerTurn == 1 ? field.getPlayer1Hero() : field.getPlayer2Hero();
         Player currentPlayer = playerTurn == 1 ? player1 : player2;
 
@@ -521,12 +502,6 @@ public final class MatchUp {
         }
 
         // Main logic of the function
-        // TODO: REMOVE
-        if (genericHero instanceof LordRoyce) {
-            System.out.println("Row: " + affectedRow);
-            System.out.println("Player Turn: " + playerTurn);
-        }
-
         currentPlayer.expendMana(genericHero.getMana());
         ArrayList<GenericCard> modifiedCards = field.getRowCards(affectedRow);
         GenericCard destroyedCard = genericHero.useAbility(modifiedCards);
@@ -535,11 +510,6 @@ public final class MatchUp {
         }
 
         // Remove the destroyed card from the field
-        // TODO: REMOVE THIS FROM FIELD
-//        System.out.println("HP card: " + destroyedCard.getHealth());
-//        System.out.println("Mana Card: " + destroyedCard.getMana());
-//        System.out.println("ATT card: " + destroyedCard.getAttackDamage());
-//        System.out.println("Card name: " + destroyedCard.getName());
 
         // We have to search the opposite player's half of
         // the table to be sure we get the right card

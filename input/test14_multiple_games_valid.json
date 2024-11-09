@@ -510,6 +510,9 @@
       },
       "actions": [
         {
+          "command": "breakpoint"
+        },
+        {
           "command": "placeCard",
           "handIdx": 0
         },
@@ -1308,6 +1311,9 @@
       },
       "actions": [
         {
+          "command": "breakpoint"
+        },
+        {
           "command": "getPlayerTurn"
         },
         {
@@ -1318,8 +1324,14 @@
           "command": "endPlayerTurn"
         },
         {
+          "command": "breakpoint"
+        },
+        {
           "command": "placeCard",
           "handIdx": 0
+        },
+        {
+          "command": "breakpoint"
         },
         {
           "command": "getCardAtPosition",
