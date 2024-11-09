@@ -22,6 +22,7 @@ public class GeneralKocioraw extends GenericHero {
             ally.setAttackDamage(ally.getAttackDamage() + 1);
         }
 
+        super.setHasAttacked(true);
         return null;
     }
 }

@@ -25,6 +25,7 @@ public class EmpressThorina extends GenericHero {
             }
         }
 
+        super.setHasAttacked(true);
         return enemyMostHP;
     }
 }

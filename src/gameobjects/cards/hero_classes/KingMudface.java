@@ -22,6 +22,7 @@ public class KingMudface extends GenericHero {
             ally.setHealth(ally.getHealth() + 1);
         }
 
+        super.setHasAttacked(true);
         return null;
     }
 }

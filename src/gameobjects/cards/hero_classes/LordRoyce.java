@@ -22,6 +22,7 @@ public class LordRoyce extends GenericHero {
             this.freeze(enemy);
         }
 
+        super.setHasAttacked(true);
         return null;
     }
 }

@@ -13,6 +13,7 @@ import gameobjects.GameField;
 import gameobjects.Player;
 
 import gameobjects.cards.GenericHero;
+import gameobjects.cards.hero_classes.LordRoyce;
 import lombok.Getter;
 import lombok.Setter;
 import utils.GameConstants;
@@ -115,6 +116,8 @@ public final class MatchUp {
 
         // Reset the field statuses
         field.resetAttackForCards();
+        field.getPlayer1Hero().setHasAttacked(false);
+        field.getPlayer2Hero().setHasAttacked(false);
     }
 
     /**
@@ -518,6 +521,12 @@ public final class MatchUp {
         }
 
         // Main logic of the function
+        // TODO: REMOVE
+        if (genericHero instanceof LordRoyce) {
+            System.out.println("Row: " + affectedRow);
+            System.out.println("Player Turn: " + playerTurn);
+        }
+
         currentPlayer.expendMana(genericHero.getMana());
         ArrayList<GenericCard> modifiedCards = field.getRowCards(affectedRow);
         GenericCard destroyedCard = genericHero.useAbility(modifiedCards);

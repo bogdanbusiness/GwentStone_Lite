@@ -207,7 +207,7 @@ public class GameField {
         for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
                 if (field[i][j] != null) {
-                    field[i][j].setHasAttacked(false);
+                    field[i][j].setFrozen(false);
                 }
             }
         }

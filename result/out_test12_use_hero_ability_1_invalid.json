@@ -114,18 +114,11 @@
     "description" : "Standard card: Death incarnate. No better time to die than now.",
     "colors" : [ "Black", "Yellow" ],
     "name" : "The Ripper"
-  }, {
-    "mana" : 1,
-    "attackDamage" : 3,
-    "health" : 1,
-    "description" : "Premium card: Fear him. Your last breath is now.",
-    "colors" : [ "Red", "Blue", "Pink" ],
-    "name" : "Berserker"
   } ]
 }, {
   "command" : "useHeroAbility",
   "affectedRow" : 2,
-  "error" : "Selected row does not belong to the enemy."
+  "error" : "Hero has already attacked this turn."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
