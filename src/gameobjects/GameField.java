@@ -36,6 +36,32 @@ public class GameField {
     // Methods
 
     /**
+     * Returns the hero of the current player
+     * @param playerTurn The current active player
+     * @return GenericHero instance with the hero requested
+     */
+    public GenericHero getPlayerHero(int playerTurn) {
+        if (playerTurn == 1) {
+            return player1Hero;
+        } else {
+            return player2Hero;
+        }
+    }
+
+    /**
+     * Returns the opposite hero of the current player
+     * @param playerTurn The current active player
+     * @return GenericHero instance with the hero requested
+     */
+    public GenericHero getOppositePlayerHero(int playerTurn) {
+        if (playerTurn == 1) {
+            return player2Hero;
+        } else {
+            return player1Hero;
+        }
+    }
+
+    /**
      * Adds a GenericCard to the playing field
      * @param genericCard The GenericCard that is placed down
      * @param rowNumber The index of the row where the card will be placed
@@ -61,10 +87,11 @@ public class GameField {
     /**
      * Gets the coordinates of a card on the field
      * @param card The card on the field
-     * @param startingRow The row from which the search starts
+     * @param playerTurn The turn of a
      * @return Returns the Point instance
      */
-    public Point getCardPosition(final GenericCard card, final int startingRow) {
+    public Point getPlayerCardPosition(final GenericCard card, final int playerTurn) {
+        int startingRow = playerTurn == 1 ? 0 : 2;
         Point returnPoint = new Point();
         for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
             for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {

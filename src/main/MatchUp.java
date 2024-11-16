@@ -120,6 +120,19 @@ public final class MatchUp {
     }
 
     /**
+     * Handles the switch of turns for players
+     */
+    public void endPlayerTurn() {
+        field.unfreezePlayerCards(playerTurn);
+        currentPlayer = playerTurn == 1 ? player2 : player1;
+        playerTurn = playerTurn == 1 ? 2 : 1;
+        turnCounter++;
+        if (turnCounter % 2 == 1) {
+            startRound();
+        }
+    }
+
+    /**
      * Handles the placement of cards on the field
      * @param action The command that was given
      * @return Null on success or an error string on failure
@@ -135,11 +148,7 @@ public final class MatchUp {
         //   Check if we can place the card and return the card to the hand of the player if we cant
         int rowAffected = card.getRowPlacement(playerTurn);
         if (field.getRowOccupancy(rowAffected) == GameConstants.TABLE_COLUMNS) {
-            if (playerTurn == 1) {
-                player1.returnCardToHand(card, handIndex);
-            } else {
-                player2.returnCardToHand(card, handIndex);
-            }
+            currentPlayer.returnCardToHand(card, handIndex);
             return "Cannot place card on table since row is full.";
         }
         field.addCard(card, rowAffected);
@@ -266,8 +275,7 @@ public final class MatchUp {
         }
 
         // Main logic of the function
-        GenericHero genericHero = playerTurn == 1 ? field.getPlayer2Hero() : field.getPlayer1Hero();
-
+        GenericHero genericHero = field.getOppositePlayerHero(playerTurn);
         int attackDealt = attackerCard.attack(genericHero);
         // If we dealt less damage then normal, then we killed the card
         if (attackDealt < attackerCard.getAttackDamage()) {
@@ -291,8 +299,7 @@ public final class MatchUp {
      * @return Null on success, error string on failure
      */
     public String handleHeroAbility(final int affectedRow) {
-        GenericHero genericHero = playerTurn == 1 ? field.getPlayer1Hero() : field.getPlayer2Hero();
-        Player currentPlayer = playerTurn == 1 ? player1 : player2;
+        GenericHero genericHero = field.getPlayerHero(playerTurn);
 
         // Required checks for game mechanics
         if (genericHero.getMana() > currentPlayer.getMana()) {
@@ -326,8 +333,7 @@ public final class MatchUp {
 
         // We have to search the opposite player's half of
         // the table to be sure we get the right card
-        int startingRow = playerTurn == 1 ? 0 : 2;
-        Point destroyedCoords = field.getCardPosition(destroyedCard, startingRow);
+        Point destroyedCoords = field.getPlayerCardPosition(destroyedCard, playerTurn);
         if (destroyedCoords == null) {
             return "Something has gone wrong.";
         }
@@ -346,18 +352,6 @@ public final class MatchUp {
             return null;
         }
         return card.printCard();
-    }
-
-    /**
-     * Handles the switch of turns for players
-     */
-    public void handleEndPlayerTurn() {
-        field.unfreezePlayerCards(playerTurn);
-        playerTurn = playerTurn == 1 ? 2 : 1;
-        turnCounter++;
-        if (turnCounter % 2 == 1) {
-            startRound();
-        }
     }
 
     /**
@@ -446,7 +440,7 @@ public final class MatchUp {
                     break;
 
                 case "endPlayerTurn":
-                    handleEndPlayerTurn();
+                    endPlayerTurn();
                     break;
 
                 // Statistics
