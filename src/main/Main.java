@@ -72,6 +72,7 @@ public final class Main {
 
         MatchUp matchup = MatchUp.getInstance(inputData);
 
+        // Handles the games played
         for (int i = 0; i < inputData.getGames().size(); i++) {
             matchup.resetMatchUp();
             matchup.startNewGame(inputData.getGames().get(i));

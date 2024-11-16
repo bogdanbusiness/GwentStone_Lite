@@ -27,6 +27,7 @@ public final class MatchUp {
     private GameField field;
     private Player player1;
     private Player player2;
+    private Player currentPlayer;
     private int shuffleSeed;
 
     private int playerTurn;
@@ -80,6 +81,7 @@ public final class MatchUp {
 
         // Set the starting player and shuffle seed
         playerTurn = input.getStartGame().getStartingPlayer();
+        currentPlayer = playerTurn == 1 ? player1 : player2;
         shuffleSeed = input.getStartGame().getShuffleSeed();
 
         // Set the hero instances for the game field
@@ -115,195 +117,6 @@ public final class MatchUp {
         field.resetAttackForCards();
         field.getPlayer1Hero().setHasAttacked(false);
         field.getPlayer2Hero().setHasAttacked(false);
-    }
-
-    /**
-     * Plays a game and performs debug actions
-     * @param actions The actions performed by players and/or debuggers
-     */
-    public ArrayNode playGame(final ArrayList<ActionsInput> actions) {
-        // Create the mapper and the output array
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode output = mapper.createArrayNode();
-
-        // Iterate over the given actions
-        for (ActionsInput action : actions) {
-            // Create a new object node and add the command to it
-            ObjectNode objectNode = mapper.createObjectNode();
-            ArrayNode retArrayNode;
-            ObjectNode retObjectNode;
-            int retInt;
-            String retStringError;
-
-            // Execute the correct action
-            switch (action.getCommand()) {
-                // Gameplay commands
-                case "placeCard":
-                    retStringError = handlePlaceCard(action);
-                    if (retStringError == null) {
-                        break;
-                    }
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("error", retStringError);
-                    objectNode.put("handIdx", action.getHandIdx());
-                    break;
-
-                case "cardUsesAttack":
-                    Point attackerAttackCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
-                    Point defenderAttackCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
-                    retStringError = handleAttackCard(attackerAttackCoords, defenderAttackCoords);
-                    if (retStringError == null) {
-                        break;
-                    }
-                    objectNode.put("command", action.getCommand());
-                    objectNode.set("cardAttacker", attackerAttackCoords.toJson());
-                    objectNode.set("cardAttacked", defenderAttackCoords.toJson());
-                    objectNode.put("error", retStringError);
-                    break;
-
-                case "cardUsesAbility":
-                    Point attackerAbilityCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
-                    Point defenderAbilityCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
-                    retStringError =
-                            handleUsesAbilityCard(attackerAbilityCoords, defenderAbilityCoords);
-                    if (retStringError == null) {
-                        break;
-                    }
-                    objectNode.put("command", action.getCommand());
-                    objectNode.set("cardAttacker", attackerAbilityCoords.toJson());
-                    objectNode.set("cardAttacked", defenderAbilityCoords.toJson());
-                    objectNode.put("error", retStringError);
-                    break;
-
-                case "useAttackHero":
-                    Point attackerHeroCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
-                    retStringError = handleAttackHero(attackerHeroCoords);
-                    if (retStringError == null) {
-                        break;
-                    }
-                    if (retStringError.equals("Player one killed the enemy hero.")
-                        || retStringError.equals("Player two killed the enemy hero.")) {
-                        System.out.println("Enemy hero killed");
-                        objectNode.put("gameEnded", retStringError);
-                        break;
-                    }
-                    objectNode.put("command", action.getCommand());
-                    objectNode.set("cardAttacker", attackerHeroCoords.toJson());
-                    objectNode.put("error", retStringError);
-                    break;
-
-                case "useHeroAbility":
-                    retStringError = handleHeroAbility(action.getAffectedRow());
-                    if (retStringError == null) {
-                        break;
-                    }
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("affectedRow", action.getAffectedRow());
-                    objectNode.put("error", retStringError);
-                    break;
-
-                case "endPlayerTurn":
-                    field.unfreezePlayerCards(playerTurn);
-                    playerTurn = playerTurn == 1 ? 2 : 1;
-                    turnCounter++;
-                    if (turnCounter % 2 == 1) {
-                        startRound();
-                    }
-                    break;
-
-                // Statistics
-                case "getPlayerOneWins":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("output", player1.getWonGames());
-                    break;
-
-                case "getPlayerTwoWins":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("output", player2.getWonGames());
-                    break;
-
-                case "getTotalGamesPlayed":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("output", player1.getTotalGames());
-                    break;
-
-                // Debug commands
-
-                // Directed at the player
-                case "getPlayerDeck":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerDeck() : player2.toJsonPlayerDeck();
-                    objectNode.set("output", retArrayNode);
-                    break;
-
-                case "getPlayerHero":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retObjectNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHero() : player2.toJsonPlayerHero();
-                    objectNode.set("output", retObjectNode);
-                    break;
-
-                case "getCardsInHand":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHand() : player2.toJsonPlayerHand();
-                    objectNode.set("output", retArrayNode);
-                    break;
-
-                case "getPlayerMana":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("playerIdx", action.getPlayerIdx());
-                    retInt = action.getPlayerIdx() == 1 ? player1.getMana() : player2.getMana();
-                    objectNode.put("output", retInt);
-                    break;
-
-                case "getPlayerTurn":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("output", playerTurn);
-                    break;
-
-                // Directed at the field
-
-                case "getCardAtPosition":
-                    objectNode.put("command", action.getCommand());
-                    objectNode.put("x", action.getX());
-                    objectNode.put("y", action.getY());
-                    Point point = new Point(action.getX(), action.getY());
-                    retObjectNode = handleGetCardAtPosition(point);
-                    if (retObjectNode == null) {
-                        objectNode.put("output", "No card available at that position.");
-                        break;
-                    }
-                    objectNode.set("output", retObjectNode);
-                    break;
-
-                case "getCardsOnTable":
-                    objectNode.put("command", action.getCommand());
-                    retArrayNode = field.printAllCardsOnTable();
-                    objectNode.set("output", retArrayNode);
-                    break;
-
-                case "getFrozenCardsOnTable":
-                    objectNode.put("command", action.getCommand());
-                    retArrayNode = field.printAllFrozenCardsOnTable();
-                    objectNode.set("output", retArrayNode);
-                    break;
-
-                case "breakpoint":
-                    break;
-
-                default:
-                    System.out.println("Error: Command not recognised.");
-                    System.out.println("Command: " + action.getCommand());
-            }
-
-            if (!objectNode.isEmpty()) {
-                output.add(objectNode);
-            }
-        }
-
-        return output;
     }
 
     /**
@@ -533,5 +346,201 @@ public final class MatchUp {
             return null;
         }
         return card.printCard();
+    }
+
+    /**
+     * Handles the switch of turns for players
+     */
+    public void handleEndPlayerTurn() {
+        field.unfreezePlayerCards(playerTurn);
+        playerTurn = playerTurn == 1 ? 2 : 1;
+        turnCounter++;
+        if (turnCounter % 2 == 1) {
+            startRound();
+        }
+    }
+
+    /**
+     * Plays a game and performs debug actions
+     * @param actions The actions performed by players and/or debuggers
+     */
+    public ArrayNode playGame(final ArrayList<ActionsInput> actions) {
+        // Create the mapper and the output array
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode output = mapper.createArrayNode();
+
+        // Iterate over the given actions
+        for (ActionsInput action : actions) {
+            // Create a new object node and add the command to it
+            ObjectNode objectNode = mapper.createObjectNode();
+            ArrayNode retArrayNode;
+            ObjectNode retObjectNode;
+            int retInt;
+            String retStringError;
+
+            // Execute the correct action
+            switch (action.getCommand()) {
+                // Gameplay commands
+                case "placeCard":
+                    retStringError = handlePlaceCard(action);
+                    if (retStringError == null) {
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("error", retStringError);
+                    objectNode.put("handIdx", action.getHandIdx());
+                    break;
+
+                case "cardUsesAttack":
+                    Point attackerAttackCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
+                    Point defenderAttackCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
+                    retStringError = handleAttackCard(attackerAttackCoords, defenderAttackCoords);
+                    if (retStringError == null) {
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.set("cardAttacker", attackerAttackCoords.toJson());
+                    objectNode.set("cardAttacked", defenderAttackCoords.toJson());
+                    objectNode.put("error", retStringError);
+                    break;
+
+                case "cardUsesAbility":
+                    Point attackerAbilityCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
+                    Point defenderAbilityCoords = new Point(action.getCardAttacked().getX(), action.getCardAttacked().getY());
+                    retStringError =
+                            handleUsesAbilityCard(attackerAbilityCoords, defenderAbilityCoords);
+                    if (retStringError == null) {
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.set("cardAttacker", attackerAbilityCoords.toJson());
+                    objectNode.set("cardAttacked", defenderAbilityCoords.toJson());
+                    objectNode.put("error", retStringError);
+                    break;
+
+                case "useAttackHero":
+                    Point attackerHeroCoords = new Point(action.getCardAttacker().getX(), action.getCardAttacker().getY());
+                    retStringError = handleAttackHero(attackerHeroCoords);
+                    if (retStringError == null) {
+                        break;
+                    }
+                    if (retStringError.equals("Player one killed the enemy hero.")
+                        || retStringError.equals("Player two killed the enemy hero.")) {
+                        System.out.println("Enemy hero killed");
+                        objectNode.put("gameEnded", retStringError);
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.set("cardAttacker", attackerHeroCoords.toJson());
+                    objectNode.put("error", retStringError);
+                    break;
+
+                case "useHeroAbility":
+                    retStringError = handleHeroAbility(action.getAffectedRow());
+                    if (retStringError == null) {
+                        break;
+                    }
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("affectedRow", action.getAffectedRow());
+                    objectNode.put("error", retStringError);
+                    break;
+
+                case "endPlayerTurn":
+                    handleEndPlayerTurn();
+                    break;
+
+                // Statistics
+                case "getPlayerOneWins":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", player1.getWonGames());
+                    break;
+
+                case "getPlayerTwoWins":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", player2.getWonGames());
+                    break;
+
+                case "getTotalGamesPlayed":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", player1.getTotalGames());
+                    break;
+
+                // Debug commands
+
+                // Directed at the player
+                case "getPlayerDeck":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerDeck() : player2.toJsonPlayerDeck();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "getPlayerHero":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retObjectNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHero() : player2.toJsonPlayerHero();
+                    objectNode.set("output", retObjectNode);
+                    break;
+
+                case "getCardsInHand":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retArrayNode = action.getPlayerIdx() == 1 ? player1.toJsonPlayerHand() : player2.toJsonPlayerHand();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "getPlayerMana":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("playerIdx", action.getPlayerIdx());
+                    retInt = action.getPlayerIdx() == 1 ? player1.getMana() : player2.getMana();
+                    objectNode.put("output", retInt);
+                    break;
+
+                case "getPlayerTurn":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("output", playerTurn);
+                    break;
+
+                // Directed at the field
+
+                case "getCardAtPosition":
+                    objectNode.put("command", action.getCommand());
+                    objectNode.put("x", action.getX());
+                    objectNode.put("y", action.getY());
+                    Point point = new Point(action.getX(), action.getY());
+                    retObjectNode = handleGetCardAtPosition(point);
+                    if (retObjectNode == null) {
+                        objectNode.put("output", "No card available at that position.");
+                        break;
+                    }
+                    objectNode.set("output", retObjectNode);
+                    break;
+
+                case "getCardsOnTable":
+                    objectNode.put("command", action.getCommand());
+                    retArrayNode = field.printAllCardsOnTable();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "getFrozenCardsOnTable":
+                    objectNode.put("command", action.getCommand());
+                    retArrayNode = field.printAllFrozenCardsOnTable();
+                    objectNode.set("output", retArrayNode);
+                    break;
+
+                case "breakpoint":
+                    break;
+
+                default:
+                    System.out.println("Error: Command not recognised.");
+                    System.out.println("Command: " + action.getCommand());
+            }
+
+            if (!objectNode.isEmpty()) {
+                output.add(objectNode);
+            }
+        }
+
+        return output;
     }
 }
