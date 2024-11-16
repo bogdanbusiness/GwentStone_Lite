@@ -4,14 +4,47 @@
 
 This application simulates a friendly 1v1 game of HeartStone with some features from Gwent.
 
+To interact with the application, the input must be formated in JSON format.
+
+## Overview
+
+### Gameplay
+
+The game is for two players, each with multiple card decks.
+At the start, each player picks a deck and an assigned hero.
+Turn order is decided by a coin toss.
+
+The game is turn-based, with each player ending their turn explicitly.
+A new round starts after both turns are complete.
+At the start of a round, players receive mana (the game’s currency) and draw a card.
+
+Cards in hand can be played on the board using mana, as each card has a mana cost.
+The board is where cards interact, with each player having 2 rows for placement.
+Heroes start on the board, each having special abilities that can affect these rows.
+
+The goal is to use cards to attack the opponent's hero until their health reaches zero.
+The player who deals the final blow wins. Each player tracks their games played and won.
+
+### Game board
+
+The board is a 4×5 grid with 2 rows per player.
+Cards are placed left to right until a row is full (max 5 cards).
+If a card is defeated, cards to its right shift left.
+Rows 0-1 belong to player 2, and rows 2-3 to player 1.
+Rows 1-2 are front rows, while 0-3 are back rows.
+Heroes have designated starting spots on the board.
+
 ## Table of contents
 
 - [Introduction](#introduction)
+- [Overview](#overview)
+  - [Gameplay](#gameplay)
+  - [Game board](#game-board)
 - [Table of contents](#table-of-contents)
 - [Interactions](#interactions)
-  - [User Interactions](#user-interactions)
-  - [Cards Interactions](#cards-interactions)
-  - [Heros Interactions](#heros-interactions)
+  - [Gameplay Interactions](#gameplay-interactions)
+  - [Statistical Interactions](#statistical-interactions)
+  - [Debug Interactions](#debug-interactions)
 - [Documentation](#documentation)
   - [Bigger Picture](#bigger-picture)
   - [Data Structures](#data-structures)
@@ -23,33 +56,33 @@ This application simulates a friendly 1v1 game of HeartStone with some features 
 
 ## Interactions
 
-### User Interactions
+### Gameplay interactions
 
-- **add** [name-1] [name-2]      Adds a connection between 2 friends.
-- **remove** [name-1] [name-2]   Removes the connection between 2 (ex-)friends.
-- **distance** [name-1] [name-2] Gets the distance between 2 people.
-- **suggestions** [name]         Gives friend request suggestions to a user.
-- **common** [name-1] [name-2]   Finds the common friends between 2 users.
-- **friends** [name]             Returns the number of friends a user has.
-- **popular** [name]             Finds who is the most popular friend of a user.
+- **placeCard**         Places a card on the board.
+- **cardUsesAttack**    Commands a card to attack another card.
+- **cardUsesAbility**   Commands a special card to use its ability.
+- **useAttackHero**     Commands a card to attack a hero.
+- **useHeroAbility**    Commands the hero to use its ability.
+- **endPlayerTurn**     Ends the turn of the current player.
 
-### Cards Interactions
+### Statistical interactions
 
-- **create** [name] [title]                           Creates a new post.
-- **repost** [name] [post-id] {repost-id}              Reposts a post.
-- **common-repost** [post] [repost-id-1] [repost-id-2] Finds the common reposts
-  between 2 reposts.
-- **like** [name] [post-id] {repost-id}                Likes a (re)post.
-- **ratio** [post-id]                                  Finds if a post got ratio'd.
-- **delete** [post-id] {repost-id}                     Delets a (re)post.
-- **get-likes** [post-id] {repost-id}                  Returns the likes of (re)post.
+- **getPlayerOneWins**      Returns the number of games one by player one.
+- **getPlayerTwoWins**      Returns the number of games one by player two.
+- **getTotalGamesPlayed**   Returns the number of games played.
 
-### Heros Interactions
+### Debug interactions
 
-**feed** [name] [feed-size]         Creates a personilized feed for the user.
-**view-profile** [name]             Views the profile of a user.
-**friends-repost** [name] [post-id] Finds all the reposts of friends of a user.
-**common-group** [name]             Finds the biggest clique a user is part of.
+**getPlayerDeck** Displays the current deck of a player.
+**getPlayerHero** Displays the hero of a player.
+**getPlayerMana** Displays the current amount of mana a player has.
+**getPlayerTurn** Returns the turn of the current active player.
+
+**getCardAtPosition**     Returns the card at the specified position.
+**getCardsOnTable**       Displays all the cards on the table
+**getFrozenCardsOnTable** Displays all the frozen cards on the table
+
+**breakpoint** Internal debug command where a breakpoint can be placed while using a debugger.
 
 ## Documentation
 

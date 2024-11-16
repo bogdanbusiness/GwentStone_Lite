@@ -167,12 +167,7 @@ public class Deck {
      * @return The GenericCard instance that was removed, or null if the deck is empty
      */
     public GenericCard removeFirstFromDeck() {
-        if (deck.isEmpty()) {
-            return null;
-        }
-        GenericCard ret = deck.remove(0);
-        numCards--;
-        return ret;
+        return removeFromDeck(0);
     }
 
     /**
