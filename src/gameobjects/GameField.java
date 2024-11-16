@@ -36,6 +36,19 @@ public class GameField {
     // Methods
 
     /**
+     * Completely resets the field
+     */
+    public void resetField() {
+        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                field[i][j] = null;
+            }
+        }
+        player1Hero = null;
+        player2Hero = null;
+    }
+
+    /**
      * Returns the hero of the current player
      * @param playerTurn The current active player
      * @return GenericHero instance with the hero requested
@@ -62,79 +75,6 @@ public class GameField {
     }
 
     /**
-     * Adds a GenericCard to the playing field
-     * @param genericCard The GenericCard that is placed down
-     * @param rowNumber The index of the row where the card will be placed
-     */
-    public void addCard(final GenericCard genericCard, final int rowNumber) {
-        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
-            if (field[rowNumber][i] == null) {
-                field[rowNumber][i] = genericCard;
-                break;
-            }
-        }
-    }
-
-    /**
-     * Gets the card on the field
-     * @param point The coordinates of the card on the field
-     * @return Returns the GenericCard instance
-     */
-    public GenericCard getCard(final Point point) {
-        return field[point.getRow()][point.getColumn()];
-    }
-
-    /**
-     * Gets the coordinates of a card on the field
-     * @param card The card on the field
-     * @param playerTurn The turn of a
-     * @return Returns the Point instance
-     */
-    public Point getPlayerCardPosition(final GenericCard card, final int playerTurn) {
-        int startingRow = playerTurn == 1 ? 0 : 2;
-        Point returnPoint = new Point();
-        for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
-                if (field[i][j] != null && field[i][j].equals(card)) {
-                    returnPoint.setRow(i);
-                    returnPoint.setColumn(j);
-                    return returnPoint;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Removes the card from the field
-     * @param point The coordinates of the card on the field
-     */
-    public void removeCard(final Point point) {
-        // Shifts every column on the row to the left
-        for (int i = point.getColumn(); i < GameConstants.TABLE_COLUMNS - 1; i++) {
-            field[point.getRow()][i] = field[point.getRow()][i + 1];
-        }
-        field[point.getRow()][GameConstants.TABLE_COLUMNS - 1] = null;
-    }
-
-    /**
-     * Gets the number of cards on the row
-     * @param row The row checked
-     * @return Returns the number of cards on the row checked
-     */
-    public int getRowOccupancy(final int row) {
-        int cards = 0;
-
-        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
-            if (field[row][i] != null) {
-                cards++;
-            }
-        }
-        return cards;
-    }
-
-    /**
      * Gets the cards on a row
      * @param row The row requested
      * @return An ArrayList instance with all the cards requested
@@ -151,16 +91,68 @@ public class GameField {
     }
 
     /**
-     * Completely resets the field
+     * Gets the number of cards on the row
+     * @param row The row checked
+     * @return Returns the number of cards on the row checked
      */
-    public void resetField() {
-        for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
-                field[i][j] = null;
+    public int getRowOccupancy(final int row) {
+        return getRowCards(row).size();
+    }
+
+    /**
+     * Adds a GenericCard to the playing field
+     * @param genericCard The GenericCard that is placed down
+     * @param rowNumber The index of the row where the card will be placed
+     */
+    public void addCard(final GenericCard genericCard, final int rowNumber) {
+        for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
+            if (field[rowNumber][i] == null) {
+                field[rowNumber][i] = genericCard;
+                break;
             }
         }
-        player1Hero = null;
-        player2Hero = null;
+    }
+
+    /**
+     * Removes the card from the field
+     * @param point The coordinates of the card on the field
+     */
+    public void removeCard(final Point point) {
+        // Shifts every column on the row to the left
+        for (int i = point.getColumn(); i < GameConstants.TABLE_COLUMNS - 1; i++) {
+            field[point.getRow()][i] = field[point.getRow()][i + 1];
+        }
+        field[point.getRow()][GameConstants.TABLE_COLUMNS - 1] = null;
+    }
+
+    /**
+     * Gets the card on the field
+     * @param point The coordinates of the card on the field
+     * @return Returns the GenericCard instance
+     */
+    public GenericCard getCard(final Point point) {
+        return field[point.getRow()][point.getColumn()];
+    }
+
+    /**
+     * Gets the coordinates of a card on the field
+     * @param card The card on the field
+     * @param playerTurn The turn of a
+     * @return Returns the Point instance with the card position, null on error
+     */
+    public Point getPlayerCardPosition(final GenericCard card, final int playerTurn) {
+        int startingRow = playerTurn == 1 ? 0 : 2;
+        Point returnPoint = new Point();
+        for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
+            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
+                if (field[i][j] != null && field[i][j].equals(card)) {
+                    returnPoint.setRow(i);
+                    returnPoint.setColumn(j);
+                    return returnPoint;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -191,20 +183,17 @@ public class GameField {
      */
     public int getTanksOnRow(final int playerTurn) {
         int tankNumber = 0;
+        ArrayList<GenericCard> cards;
 
         if (playerTurn == 1) {
-            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
-                if (field[GameConstants.PLAYER2_FRONT_ROW][i] != null
-                    && field[GameConstants.PLAYER2_FRONT_ROW][i].isTank()) {
-                    tankNumber++;
-                }
-            }
+            cards = getRowCards(GameConstants.PLAYER2_FRONT_ROW);
         } else {
-            for (int i = 0; i < GameConstants.TABLE_COLUMNS; i++) {
-                if (field[GameConstants.PLAYER1_FRONT_ROW][i] != null
-                    &&  field[GameConstants.PLAYER1_FRONT_ROW][i].isTank()) {
-                    tankNumber++;
-                }
+            cards = getRowCards(GameConstants.PLAYER1_FRONT_ROW);
+        }
+
+        for (GenericCard card : cards) {
+            if (card.isTank()) {
+                tankNumber++;
             }
         }
 
@@ -216,10 +205,9 @@ public class GameField {
      */
     public void resetAttackForCards() {
         for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
-                if (field[i][j] != null) {
-                    field[i][j].setHasAttacked(false);
-                }
+            ArrayList<GenericCard> cards = getRowCards(i);
+            for (GenericCard card : cards) {
+                card.setHasAttacked(false);
             }
         }
     }
@@ -232,10 +220,9 @@ public class GameField {
         int startingRow = playerTurn == 1 ? 2 : 0;
 
         for (int i = startingRow; i < startingRow + GameConstants.TABLE_HALF_ROWS; i++) {
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
-                if (field[i][j] != null) {
-                    field[i][j].setFrozen(false);
-                }
+            ArrayList<GenericCard> cards = getRowCards(i);
+            for (GenericCard card : cards) {
+                card.setFrozen(false);
             }
         }
     }
@@ -251,11 +238,10 @@ public class GameField {
 
         // Iterate through the entire field
         for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
+            ArrayList<GenericCard> cards = getRowCards(i);
             ArrayNode row = mapper.createArrayNode();
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
-                if (field[i][j] != null) {
-                    row.add(field[i][j].printCard());
-                }
+            for (GenericCard card : cards) {
+                row.add(card.printCard());
             }
             output.add(row);
         }
@@ -274,9 +260,10 @@ public class GameField {
 
         // Iterate through the entire field
         for (int i = 0; i < GameConstants.TABLE_ROWS; i++) {
-            for (int j = 0; j < GameConstants.TABLE_COLUMNS; j++) {
-                if (field[i][j] != null && field[i][j].isFrozen()) {
-                    output.add(field[i][j].printCard());
+            ArrayList<GenericCard> cards = getRowCards(i);
+            for (GenericCard card : cards) {
+                if (card.isFrozen()) {
+                    output.add(card.printCard());
                 }
             }
         }

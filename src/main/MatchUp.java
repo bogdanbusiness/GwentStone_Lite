@@ -43,8 +43,6 @@ public final class MatchUp {
         turnCounter = 1;
     }
 
-    // Methods
-
     /**
      * Singleton method for class MatchUp
      * @return Returns the MatchUp instance
@@ -55,6 +53,8 @@ public final class MatchUp {
         }
         return instance;
     }
+
+    // Methods
 
     /**
      * Resets the entire field

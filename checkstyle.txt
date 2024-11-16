@@ -1,7 +1,7 @@
 Starting audit...
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\cards\GenericCard.java:144:5: Definition of 'equals()' without corresponding definition of 'hashCode()'. [EqualsHashCode]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:43:38: Parameter playerTurn should be final. [FinalParameters]
-[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:56:46: Parameter playerTurn should be final. [FinalParameters]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:56:38: Parameter playerTurn should be final. [FinalParameters]
+[ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\gameobjects\GameField.java:69:46: Parameter playerTurn should be final. [FinalParameters]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:143: Line is longer than 100 characters (found 121). [LineLength]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:361:5: Method length is 179 lines (max allowed is 150). [MethodLength]
 [ERROR] C:\Users\Bogdan\Desktop\Coding\Java\Tema_0\tema\.\src\main\MatchUp.java:389: Line is longer than 100 characters (found 125). [LineLength]
